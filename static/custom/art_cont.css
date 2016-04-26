@@ -1,0 +1,604 @@
+
+@font-face
+	{
+	font-family:"Myriad";
+	src:url('../fonts/MyriadPro-Light.otf');
+
+
+	}
+
+
+
+@media (min-width: 300px) 
+	{
+	.navbar-nav 
+		{
+		float:left;
+		margin-right:0px;
+		margin-left:10%;
+		}
+
+	.navbar-collapse
+		{
+		background:white;
+		}
+	.navbar-default .navbar-nav li a
+		{
+		color:black;
+		}
+
+
+	.article_container .left_col
+		{
+		position:relative;
+		width:270px;
+		height:auto;
+		}
+	.article_container .right_col
+		{
+		margin-left:0px;
+		}	
+
+
+ 	}
+
+@media (min-width: 768px) 
+	{
+	.navbar-nav 
+		{
+		float:right;
+		margin-right:30%;
+		margin-left:0px;
+		}
+	.navbar-collapse
+		{
+		background:none;
+		}
+	.navbar-default .navbar-nav li a
+		{
+		color:white;
+		}
+
+	.article_container .left_col
+		{
+		position:absolute;
+		width:220px;
+		height:300px;
+		}
+
+	.article_container .right_col
+		{
+		margin-left:270px;
+		}	
+
+
+
+ 	}
+
+
+@media (min-width: 992px) 
+	{
+	.navbar-nav 
+		{
+		float:right;
+		margin-right:30%;
+		margin-left:0px;
+		}
+
+	.navbar-collapse
+		{
+		background:none;
+		}
+
+
+	.navbar-default .navbar-nav li a
+		{
+		color:white;
+		}
+
+
+
+	.article_container .left_col
+		{
+		position:absolute;
+		width:220px;
+		height:300px;
+		}
+
+	.article_container .right_col
+		{
+		margin-left:270px;
+		}	
+
+
+
+ 	}
+
+
+
+
+
+
+.black_plaha
+	{
+	width:100%;
+	height:50px;
+	background:black;
+	position:fixed;
+	top:0px;
+	left:0px;
+	opacity:0.4;
+	z-index:999;	
+
+	}
+
+
+
+.navbar-default  /*deop background Bootstrap menu*/
+	{
+	background:none;
+	border-width:0px;
+	box-shadow:0px 0px 5px rgb(139, 136, 136);
+	-webkit-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	-moz-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	-opera-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	-khtml-box-shadow:0px 0px 5px rgb(139, 136, 136);
+
+	position:fixed;
+	top:0px;
+	left:0px;
+	width:100%;	
+	border-radius:0px;
+	z-index:1000;
+	}
+
+
+.container-fluid .navbar-header
+	{
+	margin-left:30px;
+	}
+
+
+.navbar-default .navbar-brand
+	{
+	font-size:26px;
+	font-weight:bold;
+	color:#FA5D20;
+	}
+
+.navbar-default .navbar-brand:hover
+	{
+	color:#E74404;
+	}
+
+
+.navbar-brand .gray
+	{
+	color:rgb(214, 209, 209);
+	font-weight:normal;
+	
+	}
+
+
+
+
+.navbar-default .navbar-nav li a:hover
+	{
+	color:#79AFFF;
+	}
+
+
+.navbar-default .navbar-nav .active a
+	{
+	color:white !important;
+	background:#31B1F1 !important;
+	box-shadow:0px 0px 5px gray;
+	}
+
+.navbar-default .navbar-nav .active a:hover
+	{
+	color:white;
+	background:#31B1F1;
+	}
+
+
+
+
+
+/*-------------------------------------------------*/
+/*-----------------CONTACT Section-----------------*/
+/*-------------------------------------------------*/
+
+
+
+
+
+
+.contact_menu_container
+	{
+	width:100%;
+	min-height:100%;
+	padding-bottom:100px;	
+	}
+
+
+
+.contact_menu_container .main_img
+	{
+	width:100%;
+	height:400px;
+
+	background-image:url(../img/contact.jpg);
+
+	background-position: center top;
+	background-attachment:fixed; 
+	background-size:100%;
+	background-repeat:no-repeat;	
+
+	}
+
+
+.contact_menu_container .title
+	{
+	width:300px;
+	height:100px;
+	position:absolute;
+	left:20px;
+	top:100px;
+	z-index:4;
+
+	border-color:white;
+	border-style:solid;
+	border-width:1px;
+	border-radius:5px;
+
+
+	}
+
+
+.contact_menu_container .title_span
+	{
+	width:300px;
+	height:100px;
+	position:absolute;
+	left:20px;
+	top:100px;
+	z-index:5;
+	padding-top:10px;
+	
+	color:white;
+	font-size:68px;
+	text-align:center;
+	font-family:"Myriad";
+	}
+
+
+.contact_menu_container .title_span span
+	{
+	line-height:normal;
+
+	}
+
+
+.contact_menu_container .contact_information
+	{
+	width:80%;
+	margin-left:auto;
+	margin-right:auto;
+	
+	}
+
+.contact_menu_container .descr
+	{
+	width:100%;
+
+	}
+
+
+.contact_menu_container .h2_orange
+	{
+	color:orange;
+	margin-top:50px;
+	}
+
+
+
+
+.contact_menu_container .right_col h3
+	{
+	margin-top:20px;
+	font-family:"Myriad";
+	font-weight:lighter;
+	font-size:24px;
+	color:#333;
+	}
+
+
+
+.contact_menu_container .right_col li:first-of-type h3
+	{
+	margin-top:0px;
+
+	}
+
+
+.contact_menu_container .form_container
+	{
+	max-width:600px;
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:70px;
+
+	}
+
+
+.contact_menu_container .form_container textarea
+	{
+	height:200px;
+
+	}
+
+
+
+.contact_menu_container .form_container .btn_container
+	{
+	width:100%;
+	text-align:right;
+
+	}
+
+
+
+/*-------------------------------------------------*/
+/*-----------------ARTICLE Section-------------------*/
+/*-------------------------------------------------*/
+
+
+
+.article_container
+	{
+	width:100%;
+	min-height:100%;
+
+
+	}
+
+
+.article_container .article_img
+	{
+	position:static;
+	top:0px;
+	left:0px;
+	height:400px;
+	width:100%;
+
+	}
+
+/* CAPSULEFOR <article_img:mouse_move_img;OPEN>  */
+
+
+.article_img .container
+	{
+	position:absolute;
+	top:0px;
+	left:0px;
+	background:white;
+	margin-top:0px;
+	width:100%;
+	height:400px;
+	padding:0px;
+	}
+
+.article_img #scene
+	{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	}
+
+.article_img .layer
+	{
+	width:120%;
+	margin-left:-10%;
+	margin-top:-10%;
+	height:120%;
+	}
+
+.article_img .layer img
+	{
+	width:100%;
+	height:120%;
+	}
+
+.article_img .strech
+	{
+	height:1500px;
+	border-color:green;
+	border-style:solid;
+	border-width:1px;
+	width:100%;
+	margin-top:100px;
+
+	}
+
+
+
+
+/* CAPSULEFOR <article_img:mouse_move_img;CLOSE>  */
+
+
+
+.main_plashka .title
+	{
+	width:300px;
+	height:100px;
+	position:absolute;
+	left:20px;
+	top:100px;
+	z-index:4;
+
+	border-color:black;
+	border-style:solid;
+	border-width:1px;
+	border-radius:5px;
+
+	}
+
+
+.main_plashka .title_span
+	{
+	width:300px;
+	height:100px;
+	position:absolute;
+	left:20px;
+	top:100px;
+	z-index:5;
+	padding-top:10px;
+	
+	color:black;
+	font-size:68px;
+	text-align:center;
+	font-family:"Myriad";
+	}
+
+
+.main_plashka .title_span span
+	{
+	line-height:normal;
+
+	}
+
+
+
+
+
+.article_container .block_container
+	{
+	width:90%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:50px;
+	position:relative;
+	}
+
+
+.article_container .empt
+	{
+	width:100%;
+	height:1px;
+	}
+
+
+
+.article_container .left_col
+	{
+	height:auto;
+	}
+
+.article_container .left_col ul
+	{
+
+	border-right-color:gray;
+	border-right-style:solid;
+	border-right-width:1px;
+
+	}
+
+
+
+
+
+.article_container .left_col ul li
+	{
+	font-size:17px;
+	cursor:pointer;
+	color:rgb(111, 152, 255);
+
+	width:80%;
+
+	border-radius:3px;
+	padding-left:3px;
+
+
+	border-color:white;
+	border-style:solid;
+	border-width:1px;
+	border-radius:3px; 
+
+	}
+
+.article_container .left_col ul li:hover
+	{
+	border-color:rgb(218, 228, 255);
+	border-style:solid;
+	border-width:1px;
+	border-radius:3px; 
+
+	color:rgb(52, 99, 216);
+-	background:rgb(218, 228, 255);
+	}
+
+
+.article_container .left_col .active
+	{
+	color:rgb(52, 99, 216);
+	background:rgb(218, 228, 255);
+
+	}
+
+
+
+.article_container .right_col
+	{
+	float:left;
+	text-align:justify;
+	max-width:1000px;
+	}
+
+
+
+.article_container .right_col p
+	{
+	font-size:16px;
+	margin-top:16px;
+	line-height:1.6;
+
+	}
+
+.article_container .right_col h3:first-of-type
+	{
+	margin-top:0px;
+	}
+
+.article_container .right_col h3
+	{
+	margin-top:50px;
+	}
+
+
+
+.article_container .right_col 
+	{
+	font-size:16px;
+-	margin-top:-300px;
+	line-height:1.6;
+	}
+
+.article_container .right_col ul li
+	{
+	color:#B3B3B3;
+	margin-left:33px;
+	font-style:italic;
+	}
+
+.article_container .empty_block
+	{
+	width:100%;
+	height:500px;
+	}
+
+
+
+
+
