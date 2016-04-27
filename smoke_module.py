@@ -15,7 +15,7 @@ cfg = json.loads(cfg);
 
 
 app = Flask(__name__)
-#app.debug = True
+app.debug = True
 os.chdir(cfg['PATH'])
 
 @app.route('/')
