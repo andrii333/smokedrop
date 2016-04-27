@@ -1,19 +1,22 @@
 from flask import Flask, request,Response
 import os
 import sys
+import json
 
 
 
 
 
-
-
-
+#read config file
+t = open('config.txt','r')
+cfg = t.read()
+t.close()
+cfg = json.loads(cfg);
 
 
 app = Flask(__name__)
 #app.debug = True
-os.chdir(os.getcwd()+'/html/smoke')
+os.chdir(cfg['PATH'])
 
 @app.route('/')
 def test_1():
@@ -31,4 +34,4 @@ def test_1():
 
 
 if __name__=='__main__':
-	app.run(debug=False, host="46.101.122.41",port=81)
+	app.run(debug=False, host=cfg['HOST'],port=8080)
