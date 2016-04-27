@@ -1,0 +1,6 @@
+{
+
+  "PATH":"/home/qwerty/workshop/projects/smokedrop/",
+  "HOST":"localhost"
+  
+}
