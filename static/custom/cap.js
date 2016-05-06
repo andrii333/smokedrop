@@ -7,8 +7,9 @@ app = angular.module("app",['ui.router'])
 
 
 
-app.config(function($stateProvider, $urlRouterProvider)
+app.config(function($stateProvider, $urlRouterProvider,$anchorScrollProvider,$uiViewScrollProvider)
 	{
+	$uiViewScrollProvider.useAnchorScroll();
 	$urlRouterProvider.otherwise('/home')
 	$stateProvider
 		.state('home',
@@ -219,12 +220,84 @@ app.controller('ContactController',function($scope)
 
 
 
+app.directive('parallax',function($window)
+	{
+	return {
+		scope:{},
+		link:function(scope,element,attr)
+			{
+			console.log('Srabotalo');
+			scope.init = init;
+			scope.getDimensions = getDimensions;
+			scope.onScroll = onScroll;
+
+
+			scope.viewportHeight = 0;
+
+			
+			scope.init();
+
+			$($window).on('scroll',scope.onScroll);
+
+			function init()
+				{
+				scope.getDimensions();
+				}
+			
+
+
+			function getDimensions()
+				{
+				scope.viewportHeight = $window.innerHeight;
+				scope.parentElementHeight = element[0].parentElement.getBoundingClientRect()['height'];
+				scope.distY = scope.viewportHeight+scope.parentElementHeight;
+				scope.velocityY = parseInt(attr['parallax'].replace('%',''));
+				var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
+				scope.velocityY = scope.velocityY*scale;
+				
+				}
+
+
+			function onScroll()
+				{
+				//get parent element
+				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
+				//determine viewport location
+				if (top_pos>scope.viewportHeight&&top_pos>0)
+					{
+					return false;
+					}
+				if (top_pos<0&&(scope.parentElementHeight+top_pos)<0)
+					{
+					return false;
+					}
+
+				var distCurY = top_pos+scope.parentElementHeight;
+				var relative = parseInt(distCurY/scope.distY*100);
+				console.log(relative,distCurY,scope.distY,scope.velocityY,element);
+				relative = (1-relative/100)*scope.velocityY;
+				element.css({'transform':'translate3d(0%,-'+relative+'%,0)'});
+		
+				}
+
+			
+			}
+
+	
+
+	}
+	
+	})
+
+
+
 
 app.directive('parallaxScroll',function()
 	{
 	return { 
 		link: function(scope,element,attrs)
 			{
+/*
 			element.ready(function()
 				{
 				//cache the window object
@@ -276,7 +349,7 @@ app.directive('parallaxScroll',function()
 					})
 
 				});  // end section function				
-
+*/
 
 			}
 
@@ -292,59 +365,49 @@ app.directive('parallaxScroll',function()
 
 
 
-app.directive('animateScroll',function()
+app.directive('animateScroll',function($window)
 	{
 	return {
+		scope:{},
 		link: function(scope,element,attrs)
 			{
 
-			//create scope for each element for animation
-			if (scope.anim_scope==undefined)
+			scope.init = init;
+			scope.getDimensions = getDimensions;
+			var el = element[0];
+
+			scope.init();
+
+			function getDimensions()
 				{
-				scope.anim_scope = {};
+				scope.elemTopPos = element[0].getBoundingClientRect()['top'];
+				scope.viewportHeight = $window.innerHeight;
+console.log(scope.elemTopPos)
 				}
 
-			var el = element[0];
-			var el_id = Object.keys(scope.anim_scope).length;
-			scope.anim_scope[el_id] = {};
-			//determine dimensions (height of screen and top for animated block)
-			element.ready(function()
+			function init()
 				{
+				scope.getDimensions();
+				el.style['opacity'] = '0';
+				scope.finished = false; //animation is finished (prevent scrol handling)
+				}
 
-				if ($('.screen_height').length==0)  //insert screen block
-					{
-					var d = document.createElement('div');
-					d.style['position'] = 'absolute';
-					d.style['width'] = '100%';
-					d.style['height'] = '100%';
-					d.style['zIndex'] = '-1';
-					d.className = 'screen_height';
-					$('body').prepend(d);				
-					}
 
-				scope.anim_scope[el_id].ani_elem_top = el.getBoundingClientRect()['top'];
-				scope.screen_height = $('.screen_height')[0].getBoundingClientRect()['height'];
-				scope.$apply();
-				});
-		
-			//set element style display none, for clear behavior
-			el.style['opacity'] = '0';
-			scope.anim_scope[el_id].scroll_ani = false; ///it is flag to prevent execution of animation twice (if true - not animated)
 			//determine when to fire animation
 			$(window).scroll(function()
 				{
-				var dist = -$(window).scrollTop() + scope.anim_scope[el_id].ani_elem_top;
-				if (dist/scope.screen_height<0.7&&scope.anim_scope[el_id].scroll_ani==false)
+				if (scope.finished==true){return false;}
+				var dist = -$(window).scrollTop() + scope.elemTopPos;
+				if (dist/scope.viewportHeight<0.7)
 					{
 					el.style['opacity'] = '1'; //show element
 					$(el).addClass(attrs['animateScroll']); //set animated class
-					scope.anim_scope[el_id].scroll_ani = true;
+					scope.finished = true;
 					scope.$apply();
-	
 					}		
 				})
 
-
+				
 
 			}
 		
