@@ -364,7 +364,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
 			
-			decorators.registr(scope,'parallax');
+			//decorators.registr(scope,'parallax');
 	
 
 			scope.viewportHeight = 0;
@@ -396,7 +396,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			function onScroll(e)
 				{
-console.log('cdcd');
+//console.log('cdcd');
 				if (!e){e = window.event}
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
@@ -456,7 +456,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 			scope.SCROLL_DECREASE = 2;
 			scope.LAST_DURATION = 3000;  //duration for last event;		
 	
-			decorators.registr(scope,'scroll');
+			//decorators.registr(scope,'scroll');
 			
 			scope.init();
 			
@@ -685,7 +685,7 @@ app.directive('animateScroll',function($window)
 		scope:{},
 		link: function(scope,element,attrs)
 			{
-
+/*
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			var el = element[0];
@@ -720,7 +720,7 @@ app.directive('animateScroll',function($window)
 					}		
 				})
 
-				
+			*/	
 
 			}
 		
