@@ -397,7 +397,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			function onScroll(e)
 				{
 //console.log('cdcd');
-				if (!e){e = window.event}
+			/*	if (!e){e = window.event}
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
 				//determine viewport location
@@ -419,7 +419,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					{
 					element.css({'transform':'translate3d(0%,-'+relative+'%,0)'});
 					})
-
+*/
 				}
 
 			
