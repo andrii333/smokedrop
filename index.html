@@ -40,7 +40,7 @@
 
 
 
-<body ng-app="app">
+<body ng-app="app" scroll>
 
 
 
@@ -74,6 +74,7 @@
 	</div>  <!--close WRAP for controller-->
 
 
+	<!--for fast loading-->
 	<div style="display:none">
 		<img src="./static/img/fon_13.jpg">
 		<img src="./static/img/fon_1.jpg">
@@ -88,7 +89,9 @@
 
 	</div>
 
-	<div ui-view></div>
+
+	
+	<div class="ui_view_container" ui-view></div>
 
 
 
