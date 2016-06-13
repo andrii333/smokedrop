@@ -557,6 +557,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 					
 					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
 					var del = ts - scope.prev_t;
+					scope.prev_t = ts;
 					if (del<16)
 						{
 						window.cancelRequestAnimationFrame(scope.anim_run);
