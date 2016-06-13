@@ -549,11 +549,21 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 				scope.events.push(evt);
 				function draw(ts)
 					{
-					scope.prev_num = scope.prev_num===undefined?0:scope.prev_num;	
-					scope.cur_num = parseInt(((new Date()).getTime())*1000/60);
-					if (scope.cur_num===scope.prev_num){return false};
-					scope.prev_num = scope.cur_num;
+					//scope.prev_num = scope.prev_num===undefined?0:scope.prev_num;	
+					//scope.cur_num = parseInt(((new Date()).getTime())*1000/60);
+					//if (scope.cur_num===scope.prev_num){return false};
+					//scope.prev_num = scope.cur_num;
 					//console.log(scope.cur_num);
+					
+					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
+					var del = ts - scope.scope.prev_t;
+					if (del<16)
+						{
+						window.cancelRequestAnimationFrame(scope.anim_run);
+						scope.anim_run = window.requestAnimationFrame(draw);
+						return false;
+						}
+					
 					if (scope.anim_run==false){return false;}
 					scope.anim_run = window.requestAnimationFrame(draw);
 					decorators.start('scroll','draw');
