@@ -560,7 +560,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 					scope.prev_t = ts;
 					if (del<16)
 						{
-						window.cancelRequestAnimationFrame(scope.anim_run);
+						window.cancelAnimationFrame(scope.anim_run);
 						scope.anim_run = window.requestAnimationFrame(draw);
 						return false;
 						}
