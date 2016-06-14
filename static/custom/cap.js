@@ -212,7 +212,7 @@ app.controller('ArticleController',function($scope)
 app.service('decorators',function($window)
 	{
 	$window.timings = {};
-
+	this.active = true;
 
 	function create_funct_obj()
 		{
@@ -244,6 +244,7 @@ app.service('decorators',function($window)
 	//registration (create key for dictionary and decorate function)
 	this.registr = function(scope,name)
 		{
+		if (this.active==false){return false}
 		//we need to check existence of this section, because we can reuse directive in diferent views
 		
 		if ($window.timings[name]===undefined)
@@ -360,6 +361,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 		scope:{},
 		link:function(scope,element,attr)
 			{
+	/*
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
@@ -396,7 +398,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			function onScroll(e)
 				{
-console.log('cdcd');
+				//console.log('cdcd');
 				if (!e){e = window.event}
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
@@ -422,7 +424,7 @@ console.log('cdcd');
 
 				}
 
-			
+*/			
 			}
 
 	
@@ -449,13 +451,12 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 
 
 
-			scope.DURATION = 500;
-			scope.MAX_DURATION = 1000;
-			scope.MAX_EVENTS = 30;
-			scope.TRASHHOLD = 10000;
-			scope.SCROLL_DECREASE = 2;
-			scope.LAST_DURATION = 3000;  //duration for last event;		
-	
+			scope.DURATION = 20;   //duration in frames (1s = 60 frames)
+			scope.TRASHHOLD =50;  //number ov events to handle
+			scope.DISTANCE = 50;  //number of pixels to scroll for one event
+			scope.DECREASE = 0.1;  //decrease * kolvo_e - as many events - so shorter distance 			
+			scope.DURATION_INCREASE = 2;  //increase up to trashhold in * times
+			
 			decorators.registr(scope,'scroll');
 			
 			scope.init();
@@ -465,7 +466,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 				{
 				$(window).on('mousewheel MozMousePixelScroll',scope.onScroll);
 				scope.events = [];
-				scope.anim_run = false;
 				}
 
 
@@ -488,8 +488,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 				return c*t/d + b;
 				}
 
-			scope.anim_run = false;
-			scope.last_event = false;
 			function onScroll(e)
 				{
 				if (!e){e = window.event}
@@ -499,97 +497,108 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 					{
 					e['originalEvent']['deltaY'] = e['originalEvent']['detail'];
 					}
-				var kolvo_e = scope.events.length;
-				//get last value to obtain the sign (means direction)
-				if (kolvo_e!=0)
-					{
-					var dif_ts = -scope.events[kolvo_e-1]['StartTime'] + e['timeStamp'];
-					}
-				else
-					{
-					var dif_ts = 0;
-					}
-				//var dif = e['originalEvent']['deltaY'];
-				var dif = e['originalEvent']['deltaY'];
-				dif = dif<0?-50:50;  //to fix constant move distance
-				if (dif_ts>scope.TRASHHOLD)
-					{
-					scope.events = [];
-					scope.kolvo_draw = 0;
-					scope.anim_run = false;
-					scope.last_event = false;
-					window.cancelAnimationFrame(scope.anim_run);
-					}
+		
+				var distance = e['originalEvent']['deltaY'];
 				
 				//check on direction changes
 				var sign_minus = scope.events.filter(function(el){return el['Distance']<0});
 				var sign_plus = scope.events.filter(function(el){return el['Distance']>0});
-				if (dif>0&&sign_minus.length>0)
+				if (distance>0&&sign_minus.length>0)
 					{
-					window.cancelAnimationFrame(scope.anim_run);
-					scope.anim_run = false;
+					window.cancelAnimationFrame(scope.frame);
 					scope.events = [];
 					}
 
-				if (dif<0&&sign_plus.length>0)
+				if (distance<0&&sign_plus.length>0)
 					{
-					window.cancelAnimationFrame(scope.anim_run);
-					scope.anim_run = false;
+					window.cancelAnimationFrame(scope.frame);
 					scope.events = [];
 					}
-		
-				
-				var evt = {};
-				evt['Distance'] = dif*scope.SCROLL_DECREASE;
-				evt['StartTime'] = (new Date()).getTime(); 
-				evt['PrevDistance'] = 0;
-				kolvo_e = kolvo_e>scope.MAX_EVENTS?scope.MAX_EVENTS:kolvo_e;
-				//console.log(kolvo_e,'kolvo_e');
-				evt['Duration'] = ease_quad_out(kolvo_e,scope.DURATION,scope.MAX_DURATION,scope.MAX_EVENTS);
-				scope.events.push(evt);
-				function draw(ts)
+				//abort if kolvo event more then trashhold	
+				if (scope.events.length>scope.TRASHHOLD)
 					{
-					scope.prev_num = scope.prev_num===undefined?0:scope.prev_num;	
-					scope.cur_num = parseInt(((new Date()).getTime())*1000/60);
-					if (scope.cur_num===scope.prev_num){return false};
-					scope.prev_num = scope.cur_num;
-					//console.log(scope.cur_num);
-					if (scope.anim_run==false){return false;}
-					scope.anim_run = window.requestAnimationFrame(draw);
-					decorators.start('scroll','draw');
-					var total_scroll = 0;
-					var cur_ts = (new Date()).getTime();
+					return false;
+					}
 
-					scope.events = scope.events.filter(function(el)
+				//abort if there was an event in this frame
+				var kolvo_e = scope.events.length;
+				if (kolvo_e!=0)
+					{
+					if (scope.events[kolvo_e-1]['EllapsedFrames']==0)
 						{
-						var delta = cur_ts - el['StartTime']-el['Duration'];
-						return delta<0;
-						})
-
-					if (scope.events.length==0)
-						{
-						window.cancelAnimationFrame(scope.anim_run);
-						scope.anim_run = false;
 						return false;
 						}
 
-					scope.events = scope.events.map(function(el)
+					}	
+				if (scope.events.length==0)
+					{
+					scope.frame = window.requestAnimationFrame(draw);
+					}
+				
+				var evt = {};
+				evt['PrevDistance'] = 0;
+				//var dur = parseInt(scope.DURATION*(1+(kolvo_e/scope.TRASHHOLD)*scope.DURATION_INCREASE))
+				evt['Duration'] = parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
+				evt['EllapsedFrames'] = 0;
+				var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
+				console.log('dis',dis);
+				evt['Distance'] = distance>0?dis:-dis;
+				scope.events.push(evt);
+				
+				function draw(ts)
+					{
+
+					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
+					//console.log(ts-scope.prev_t);
+					scope.prev_t = ts;
+					scope.count = scope.count===undefined?0:scope.count;
+					scope.count = scope.count+1;
+					//console.log(scope.count);
+
+					if (scope.events.length==0)
 						{
-						
-						var time_pos = cur_ts - el['StartTime'];
-					//	console.log(time_pos,cur_ts,cur_ts - scope.prev_ts);
-						scope.prev_ts = cur_ts;
-					//	var position = ease_quadratic(time_pos,0,el['Distance'],el['Duration']);			
-						var position = linear(time_pos,0,el['Distance'],el['Duration']);			
-						var scroll_dist = position-el['PrevDistance'];
-						total_scroll = total_scroll+scroll_dist;
-						el['PrevDistance'] = position;
-						return el;
+						window.cancelAnimationFrame(scope.frame);
+						return false;
+						}
+
+					//control frame length
+					scope.events[0]['LastFrame']===undefined?0:scope.events[0]['LastFrame'];
+					var delta = ts - scope.events[0]['LastFrame'];
+					if (delta<16)
+						{
+						window.cancelAnimationFrame(scope.frame);
+						scope.frame = window.requestAnimationFrame(draw);
+						return false;
+						};
+					
+					//for safe case - cancel animation if no events
+					scope.frame = window.requestAnimationFrame(draw);	
+					
+
+					decorators.start('scroll','draw');
+					var final_scroll = 0;
+					var frames = [];
+					for (var each in scope.events)
+						{
+						scope.events[each]['LastFrame'] = ts;
+						scope.events[each]['EllapsedFrames'] = scope.events[each]['EllapsedFrames']+1;
+						var share = scope.events[each]['EllapsedFrames']/scope.events[each]['Duration'];
+						var total_scroll = parseInt(share*scope.events[each]['Distance']);
+						final_scroll = final_scroll+(total_scroll - scope.events[each]['PrevDistance']);
+						scope.events[each]['PrevDistance'] = total_scroll;
+						frames.push(scope.events[each]['EllapsedFrames']);
+						}
+					//console.log(frames.join(':'));
+					scope.events = scope.events.filter(function(el)
+						{
+						return el['Duration']!=el['EllapsedFrames']
 						})
-					window.scrollBy(0,total_scroll);
+					console.log(final_scroll);
+
+					window.scrollBy(0,final_scroll);
 
 					}  //close draw function
-				scope.anim_run = window.requestAnimationFrame(draw);
+				
 				}  //close scroll
 
 		
