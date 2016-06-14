@@ -1,6 +1,6 @@
 {
 
-  "PATH":"/home/qwerty/workshop/projects/smokedrop/",
+  "PATH":"/var/www/html/smokedrop/",
   "HOST":"localhost"
   
 }
