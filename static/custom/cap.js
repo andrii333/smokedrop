@@ -544,7 +544,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope)
 				console.log('dis',dis);
 				evt['Distance'] = distance>0?dis:-dis;
 				scope.events.push(evt);
-				console.log('dede');				
+				console.log('DDD');				
 				function draw(ts)
 					{
 
