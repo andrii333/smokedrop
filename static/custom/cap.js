@@ -451,11 +451,11 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 
 
-			scope.DURATION = 10;   //duration in frames (1s = 60 frames)
-			scope.TRASHHOLD =50;  //number ov events to handle
+			scope.DURATION = 4;   //duration in frames (1s = 60 frames)  !10
+			scope.TRASHHOLD =50;  //number ov events to handle   !50
 			scope.DISTANCE = parseInt(screen.height/6);  //number of pixels to scroll for one event
-			scope.DECREASE = 0.1;  //decrease * kolvo_e - as many events - so shorter distance 			
-			scope.DURATION_INCREASE = 1.8;  //increase up to trashhold in * times
+			scope.DECREASE = 0.1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
+			scope.DURATION_INCREASE = 1.8;  //increase up to trashhold in * times   !1.8
 			
 			decorators.registr(scope,'scroll');
 			
