@@ -451,11 +451,11 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 
 
-			scope.DURATION = 4;   //duration in frames (1s = 60 frames)  !10
-			scope.TRASHHOLD =50;  //number ov events to handle   !50
+			scope.DURATION = 13;   //duration in frames (1s = 60 frames)  !10
+			scope.TRASHHOLD =1000;  //number ov events to handle   !50
 			scope.DISTANCE = parseInt(screen.height/6);  //number of pixels to scroll for one event
-			scope.DECREASE = 0.1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
-			scope.DURATION_INCREASE = 1.8;  //increase up to trashhold in * times   !1.8
+			scope.DECREASE = -1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
+			scope.DURATION_INCREASE = 100;  //increase up to trashhold in * times   !1.8
 			
 			decorators.registr(scope,'scroll');
 			
@@ -545,6 +545,8 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
 				//console.log('dis',dis);
 				evt['Distance'] = distance>0?dis:-dis;
+				//evt['Distance'] = distance;
+
 				scope.events.push(evt);
 				function draw(ts)
 					{
@@ -597,6 +599,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						return el['Duration']!=el['EllapsedFrames']
 						})
 					//console.log(final_scroll);
+
 
 					window.scrollBy(0,final_scroll);
 
