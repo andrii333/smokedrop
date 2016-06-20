@@ -452,10 +452,10 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 
 			scope.DURATION = 13;   //duration in frames (1s = 60 frames)  !10
-			scope.TRASHHOLD =1000;  //number ov events to handle   !50
-			scope.DISTANCE = parseInt(screen.height/6);  //number of pixels to scroll for one event
+			scope.TRASHHOLD = 1000;  //number ov events to handle   !50
+			scope.DISTANCE = parseInt(screen.height/13);  //number of pixels to scroll for one event
 			scope.DECREASE = -1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
-			scope.DURATION_INCREASE = 100;  //increase up to trashhold in * times   !1.8
+			scope.DURATION_INCREASE = 5;  //increase up to trashhold in * times   !1.8
 			
 			decorators.registr(scope,'scroll');
 			
@@ -465,6 +465,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 			function init()
 				{
 				$(window).on('mousewheel MozMousePixelScroll',scope.onScroll);
+			//	$(window).on('scroll',function(e){console.log(e)});
 				scope.events = [];
 				}
 
@@ -490,7 +491,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 			function onScroll(e)
 				{
-
+				console.log('fix',scope.events.length);
 				if (!e){e = window.event}
 				e.preventDefault();
 				//for mozilla
@@ -501,7 +502,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 		
 				var distance = e['originalEvent']['deltaY'];
 				
-			
 				//check on direction changes
 				var sign_minus = scope.events.filter(function(el){return el['Distance']<0});
 				var sign_plus = scope.events.filter(function(el){return el['Distance']>0});
@@ -540,6 +540,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				var evt = {};
 				evt['PrevDistance'] = 0;
 				//var dur = parseInt(scope.DURATION*(1+(kolvo_e/scope.TRASHHOLD)*scope.DURATION_INCREASE))
+			//	evt['Duration'] = (scope.DURATION*scope.DURATION)/parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
 				evt['Duration'] = parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
 				evt['EllapsedFrames'] = 0;
 				var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
@@ -548,16 +549,10 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				//evt['Distance'] = distance;
 
 				scope.events.push(evt);
+				//console.log(scope.events.length);
 				function draw(ts)
 					{
 	
-					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
-					console.log(ts-scope.prev_t);
-					scope.prev_t = ts;
-					scope.count = scope.count===undefined?0:scope.count;
-					scope.count = scope.count+1;
-					//console.log(scope.count);
-
 					if (scope.events.length==0)
 						{
 						window.cancelAnimationFrame(scope.frame);
@@ -565,8 +560,20 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						}
 
 					//control frame length
-					scope.events[0]['LastFrame']===undefined?0:scope.events[0]['LastFrame'];
+					scope.events[0]['LastFrame'] = scope.events[0]['LastFrame']===undefined?0:scope.events[0]['LastFrame'];
 					var delta = ts - scope.events[0]['LastFrame'];
+					var kolvo_frames = parseInt(delta/16);	
+					if (isNaN(delta)==true){kolvo_frames = 1};
+					kolvo_frames = kolvo_frames>2?2:kolvo_frames;
+
+					kolvo_frames = 1;
+
+					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
+					//console.log(ts-scope.prev_t,delta);
+					scope.prev_t = ts;
+					scope.count = scope.count===undefined?0:scope.count;
+					scope.count = scope.count+1;
+					//console.log(scope.count);
 				
 	
 					if (delta<1000/80)
@@ -582,24 +589,24 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 					decorators.start('scroll','draw');
 					var final_scroll = 0;
+
 					var frames = [];
 					for (var each in scope.events)
 						{
 						scope.events[each]['LastFrame'] = ts;
-						scope.events[each]['EllapsedFrames'] = scope.events[each]['EllapsedFrames']+1;
+						scope.events[each]['EllapsedFrames'] = scope.events[each]['EllapsedFrames']+kolvo_frames;
 						var share = scope.events[each]['EllapsedFrames']/scope.events[each]['Duration'];
 						var total_scroll = parseInt(share*scope.events[each]['Distance']);
 						final_scroll = final_scroll+(total_scroll - scope.events[each]['PrevDistance']);
-						scope.events[each]['PrevDistance'] = total_scroll;
 						frames.push(scope.events[each]['EllapsedFrames']);
+						scope.events[each]['PrevDistance'] = total_scroll;
 						}
-					//console.log(frames.join(':'));
+					console.log(frames.join(':'));
 					scope.events = scope.events.filter(function(el)
 						{
-						return el['Duration']!=el['EllapsedFrames']
+						return el['Duration']>=el['EllapsedFrames']
 						})
 					//console.log(final_scroll);
-
 
 					window.scrollBy(0,final_scroll);
 
