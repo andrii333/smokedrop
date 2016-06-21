@@ -353,7 +353,12 @@ app.controller('ContactController',function($scope)
 //CAPSULEFOR <angularjs_frame;CLOSE>
 
 
-
+/**
+ *
+ *@directive
+ * isolated directive for moving element on every scroll event
+ *
+ */
 
 app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 	{
@@ -361,27 +366,32 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 		scope:{},
 		link:function(scope,element,attr)
 			{
-	/*
+
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
-			
+
 			decorators.registr(scope,'parallax');
 	
-
+			scope.DURATION = 20;
 			scope.viewportHeight = 0;
+			scope.final_relative = 0;
 
-			
+
+			//if (element[0].className!='bgimg ng-isolate-scope'){return false}
+			//console.log(element[0].className);
+
+
 			scope.init();
 
-			$(window).on('scroll',scope.onScroll);
+			//$(window).on('scroll',scope.onScroll);
+
 
 			function init()
 				{
 				scope.getDimensions();
+				scope.onScroll();
 				}
-			
-
 
 			function getDimensions()
 				{
@@ -391,13 +401,15 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.velocityY = parseInt(attr['parallax'].replace('%',''));
 				var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
 				scope.velocityY = scope.velocityY*scale;
-				
+
 				scope.prev_scroll_dist = 0;
 				scope.anim_run = false;
 				}
 
+
 			function onScroll(e)
 				{
+				scope.st = true;
 				//console.log('cdcd');
 				if (!e){e = window.event}
 				//get parent element
@@ -411,20 +423,49 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					{
 					return false;
 					}
-				//if (element[0].className.indexOf('bgimg')!=-1){console.log(element)};
 
+
+				//if (element[0].className.indexOf('bgimg')!=-1){console.log(element)};
 				var distCurY = top_pos+scope.parentElementHeight;
 				var relative = parseInt(distCurY/scope.distY*100);
 				relative = (1-relative/100)*scope.velocityY;
-				
+
+				var delta = relative - scope.final_relative;
+
+				//console.log(scope.final_relative,relative,delta);
+
+				if (Math.abs(delta)>0.05)
+					{
+					//console.log('before',delta,scope.DURATION,parseInt(delta/scope.DURATION));
+					var t = delta/scope.DURATION;
+					console.log(delta, t);
+					if (t>=0)
+						t = t<=0.05?0.05:t;
+					else
+						t = t>-0.05?-0.05:t;
+
+					scope.final_relative = scope.final_relative+t;
+					//console.log('after',scope.final_relative);
+					}
+				else
+					{
+					window.requestAnimationFrame(scope.onScroll);
+					return false;
+					}
+
+				element.css({'transform':'translate3d(0%,-'+scope.final_relative+'%,0)'});
+
+
+				window.requestAnimationFrame(scope.onScroll);
+					/*
 				window.requestAnimationFrame(function()
 					{
 					element.css({'transform':'translate3d(0%,-'+relative+'%,0)'});
 					})
-
+				*/
 				}
 
-*/			
+
 			}
 
 	
@@ -450,8 +491,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 			scope.onScroll = onScroll;
 
 
-
-			scope.DURATION = 13;   //duration in frames (1s = 60 frames)  !10
+			scope.DURATION = 7;   //duration in frames (1s = 60 frames)  !10
 			scope.TRASHHOLD = 1000;  //number ov events to handle   !50
 			scope.DISTANCE = parseInt(screen.height/13);  //number of pixels to scroll for one event
 			scope.DECREASE = -1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
@@ -491,7 +531,8 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 			function onScroll(e)
 				{
-				console.log('fix',scope.events.length);
+				console.log('fix',scope.events,e['originalEvent']['deltaY']);
+
 				if (!e){e = window.event}
 				e.preventDefault();
 				//for mozilla
@@ -545,8 +586,8 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				evt['EllapsedFrames'] = 0;
 				var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
 				//console.log('dis',dis);
-				evt['Distance'] = distance>0?dis:-dis;
-				//evt['Distance'] = distance;
+				//evt['Distance'] = distance>0?dis:-dis;
+				evt['Distance'] = distance;
 
 				scope.events.push(evt);
 				//console.log(scope.events.length);
@@ -601,7 +642,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						frames.push(scope.events[each]['EllapsedFrames']);
 						scope.events[each]['PrevDistance'] = total_scroll;
 						}
-					console.log(frames.join(':'));
+					//console.log(frames.join(':'));
 					scope.events = scope.events.filter(function(el)
 						{
 						return el['Duration']>=el['EllapsedFrames']
@@ -611,10 +652,10 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					window.scrollBy(0,final_scroll);
 
 					}  //close draw function
-				
+
 				}  //close scroll
 
-		
+
 			}
 
 	
