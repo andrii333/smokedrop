@@ -370,26 +370,29 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
+			scope.draw = draw;
 
-			decorators.registr(scope,'parallax');
+
+			//decorators.registr(scope,'parallax');
 	
-			scope.DURATION = 20;
+
+			scope.DURATION = attr['parallaxDuration']===undefined?20:attr['parallaxDuration'];
 			scope.viewportHeight = 0;
 			scope.final_relative = 0;
-
-
-			//if (element[0].className!='bgimg ng-isolate-scope'){return false}
+			
+			//if (element[0].className!='title_span answer ng-isolate-scope'){return false}
 			//console.log(element[0].className);
-
-
+			
+	
 			scope.init();
 
-			//$(window).on('scroll',scope.onScroll);
+			$(window).on('scroll',scope.onScroll);
 
 
 			function init()
 				{
 				scope.getDimensions();
+				scope.st = false;
 				scope.onScroll();
 				}
 
@@ -400,27 +403,36 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.distY = scope.viewportHeight+scope.parentElementHeight;
 				scope.velocityY = parseInt(attr['parallax'].replace('%',''));
 				var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
-				scope.velocityY = scope.velocityY*scale;
+				//scope.velocityY = scope.velocityY/scale;
+				scope.velocityY = scope.velocityY;
 
 				scope.prev_scroll_dist = 0;
-				scope.anim_run = false;
 				}
 
 
 			function onScroll(e)
 				{
-				scope.st = true;
-				//console.log('cdcd');
-				if (!e){e = window.event}
+				console.log(scope.st);
+				if (scope.st==true){return false}
+
+				scope.st = true;  //flag for marking runnig requestanimationframes
+				window.requestAnimationFrame(scope.draw);
+				}
+
+			function draw()
+				{
+
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
 				//determine viewport location
 				if (top_pos>scope.viewportHeight&&top_pos>0)
 					{
+					scope.st = false;
 					return false;
 					}
 				if (top_pos<0&&(scope.parentElementHeight+top_pos)<0)
 					{
+					scope.st = false;
 					return false;
 					}
 
@@ -429,40 +441,30 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				var distCurY = top_pos+scope.parentElementHeight;
 				var relative = parseInt(distCurY/scope.distY*100);
 				relative = (1-relative/100)*scope.velocityY;
-
 				var delta = relative - scope.final_relative;
 
-				//console.log(scope.final_relative,relative,delta);
-
-				if (Math.abs(delta)>0.05)
+				//console.log(delta);
+				if (Math.abs(delta)>0.01)
 					{
-					//console.log('before',delta,scope.DURATION,parseInt(delta/scope.DURATION));
 					var t = delta/scope.DURATION;
-					console.log(delta, t);
 					if (t>=0)
-						t = t<=0.05?0.05:t;
+						t = t<=0.01?0.01*scope.DURATION:t;
 					else
-						t = t>-0.05?-0.05:t;
+						t = t>-0.01?-0.01*scope.DURATION:t;
 
+					
 					scope.final_relative = scope.final_relative+t;
-					//console.log('after',scope.final_relative);
 					}
 				else
 					{
-					window.requestAnimationFrame(scope.onScroll);
+					scope.st = false;
 					return false;
 					}
+				console.log(scope.final_relative);
+				element.css({'transform':'translate3d(0%,'+scope.final_relative*(-1)+'%,0)'});
+				window.requestAnimationFrame(scope.draw);
 
-				element.css({'transform':'translate3d(0%,-'+scope.final_relative+'%,0)'});
 
-
-				window.requestAnimationFrame(scope.onScroll);
-					/*
-				window.requestAnimationFrame(function()
-					{
-					element.css({'transform':'translate3d(0%,-'+relative+'%,0)'});
-					})
-				*/
 				}
 
 
@@ -497,7 +499,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 			scope.DECREASE = -1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
 			scope.DURATION_INCREASE = 5;  //increase up to trashhold in * times   !1.8
 			
-			decorators.registr(scope,'scroll');
+			//decorators.registr(scope,'scroll');
 			
 			scope.init();
 			
@@ -505,7 +507,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 			function init()
 				{
 				$(window).on('mousewheel MozMousePixelScroll',scope.onScroll);
-			//	$(window).on('scroll',function(e){console.log(e)});
 				scope.events = [];
 				}
 
@@ -531,7 +532,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 
 			function onScroll(e)
 				{
-				console.log('fix',scope.events,e['originalEvent']['deltaY']);
 
 				if (!e){e = window.event}
 				e.preventDefault();
@@ -628,7 +628,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					scope.frame = window.requestAnimationFrame(draw);	
 					
 
-					decorators.start('scroll','draw');
+					//decorators.start('scroll','draw');
 					var final_scroll = 0;
 
 					var frames = [];
