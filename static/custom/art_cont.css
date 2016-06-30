@@ -3,9 +3,27 @@
 	{
 	font-family:"Myriad";
 	src:url('../fonts/MyriadPro-Light.otf');
-
-
 	}
+
+
+
+@font-face 
+	{
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 300;
+	src: local('Poppins Light'), local('Poppins-Light'), url(../fonts/poppins_1.woff) format('woff');
+	}
+
+
+@font-face 
+	{
+	font-family: 'Poppins';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Poppins Bold'), local('Poppins-Bold'), url(../fonts/poppins_2.woff) format('woff');
+	}
+
 
 
 
@@ -18,13 +36,31 @@
 		margin-left:10%;
 		}
 
+	.navbar-default
+		{
+		background:white !important;
+		height:100px;
+		}
+
+	.navbar-default.after_scroll
+		{
+		height:70px;
+		}
+
 	.navbar-collapse
 		{
 		background:white;
 		}
+
+	.navbar-default.after_scroll .navbar-nav li a
+		{
+		color:rgb(223, 85, 85) !important;	
+		}
+
 	.navbar-default .navbar-nav li a
 		{
-		color:black;
+		color:rgb(231, 132, 132) !important;
+		font-size:25px;
 		}
 
 
@@ -46,17 +82,35 @@
 	{
 	.navbar-nav 
 		{
-		float:right;
-		margin-right:30%;
-		margin-left:0px;
+		position:absolute;
+		top:0px;
+		bottom:0px;
+		right:80px;
+		margin:auto auto;
+		height:50px;
+		
 		}
+
+
 	.navbar-collapse
 		{
 		background:none;
 		}
+
+	.navbar-default.after_scroll
+		{
+		height:70px;
+		}
+
+	.navbar-default.after_scroll .navbar-nav li a
+		{
+		color:rgb(223, 85, 85) !important;	
+		}
+
 	.navbar-default .navbar-nav li a
 		{
-		color:white;
+		font-size:16px;
+		color:white !important;
 		}
 
 	.article_container .left_col
@@ -80,9 +134,12 @@
 	{
 	.navbar-nav 
 		{
-		float:right;
-		margin-right:30%;
-		margin-left:0px;
+		position:absolute;
+		top:0px;
+		bottom:0px;
+		right:80px;
+		margin:auto auto;
+		height:50px;
 		}
 
 	.navbar-collapse
@@ -90,10 +147,22 @@
 		background:none;
 		}
 
+	.navbar-default.after_scroll
+		{
+		height:70px;
+		}
+
+
+	.navbar-default.after_scroll .navbar-nav li a
+		{
+		color:rgb(223, 85, 85) !important;	
+		}
+
 
 	.navbar-default .navbar-nav li a
 		{
-		color:white;
+		font-size:16px;
+		color:white !important;
 		}
 
 
@@ -121,28 +190,41 @@
 
 .black_plaha
 	{
-	width:100%;
-	height:50px;
-	background:black;
+	-display:none;
+	width:140%;
+	margin-left:-20%;
 	position:fixed;
 	top:0px;
 	left:0px;
-	opacity:0.4;
 	z-index:999;	
+	transition:all ease 0.4s;
+	height:70px;
+	background:none;
+	opacity:0;
+	}
 
+
+.black_plaha.after_scroll
+	{
+	display:block;
+	height:70px;
+	background:white;
+	opacity:0.6;
+
+	box-shadow:0px 0px 5px black;
 	}
 
 
 
 .navbar-default  /*deop background Bootstrap menu*/
 	{
-	background:none;
 	border-width:0px;
-	box-shadow:0px 0px 5px rgb(139, 136, 136);
-	-webkit-box-shadow:0px 0px 5px rgb(139, 136, 136);
-	-moz-box-shadow:0px 0px 5px rgb(139, 136, 136);
-	-opera-box-shadow:0px 0px 5px rgb(139, 136, 136);
-	-khtml-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	--webkit-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	--moz-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	--opera-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	--khtml-box-shadow:0px 0px 5px rgb(139, 136, 136);
+	background:none !important;
 
 	position:fixed;
 	top:0px;
@@ -150,26 +232,71 @@
 	width:100%;	
 	border-radius:0px;
 	z-index:1000;
+	transition:all ease 1s;
+
 	}
 
+.navbar-default li a
+	{
+	transition:all ease 1s;
+	}
+
+
+
+.container-fluid
+	{
+	height:100%;
+	}
 
 .container-fluid .navbar-header
 	{
 	margin-left:30px;
+	height:100%;
 	}
 
 
 .navbar-default .navbar-brand
 	{
-	font-size:26px;
+	font-family:'Poppins', sans-serif;
+	padding:0px;
+	position:absolute;
+	top:0px;
+	bottom:0px;
+	left:15px;
+	right:0px;
+	margin:auto auto;
+	font-size:40px;
+	height:30px;
+
+	margin-left:0px !important;
+
 	font-weight:bold;
-	color:#FA5D20;
+	color:white;
+
+	transition:all ease 1s;
+
 	}
 
 .navbar-default .navbar-brand:hover
 	{
-	color:#E74404;
+	color:white;
 	}
+
+.navbar-default.after_scroll .navbar-brand
+	{
+	color:rgb(195, 243, 195);
+	}
+
+
+
+
+.navbar-nav li a
+	{
+	font-family:'Poppins', sans-serif;
+	font-weight:bold;
+	text-transform:uppercase;
+	}
+
 
 
 .navbar-brand .gray
@@ -182,23 +309,30 @@
 
 
 
-.navbar-default .navbar-nav li a:hover
+.navbar-default .navbar-nav li
 	{
-	color:#79AFFF;
+	-webkit-backface-visibility: hidden;
+	-webkit-transform: scale(1);
+
+	}
+
+.navbar-default .navbar-nav li:hover
+	{
+
+	-webkit-animation:flipInX 1s;
+	animation:flipinX 1s;
+	background:none !important;
 	}
 
 
 .navbar-default .navbar-nav .active a
 	{
-	color:white !important;
-	background:#31B1F1 !important;
-	box-shadow:0px 0px 5px gray;
+	background:none !important;
 	}
 
 .navbar-default .navbar-nav .active a:hover
 	{
-	color:white;
-	background:#31B1F1;
+	background:none !important;
 	}
 
 

@@ -385,7 +385,6 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			
 	
 			scope.init();
-
 			$(window).on('scroll',scope.onScroll);
 
 
@@ -737,7 +736,34 @@ app.directive('parallaxScroll',function()
 
 
 
+app.directive('menuScroll',function()
+	{
+	return {
+		link:function(scope,element,attrs)
+			{
+			
+			$(window).on('scroll',function()
+				{
+				var time_border = attrs['menuScroll'];
+				var scroll_y = window.scrollY;
+				if (scroll_y>time_border)
+					{
+					element.addClass('after_scroll');
+					}
+				else
+					{
+					element.removeClass('after_scroll');
+					}
+				
+				})
 
+
+			}
+
+		}
+
+
+	})
 
 
 
