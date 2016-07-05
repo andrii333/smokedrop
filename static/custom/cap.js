@@ -366,7 +366,6 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 		scope:{},
 		link:function(scope,element,attr)
 			{
-
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
@@ -376,9 +375,11 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			//decorators.registr(scope,'parallax');
 	
 
-			scope.DURATION = attr['parallaxDuration']===undefined?20:attr['parallaxDuration'];
 			scope.viewportHeight = 0;
 			scope.final_relative = 0;
+			scope.MARGIN_DISTANCE_TOP = parseInt(attr['parallaxTop'].replace('px',''));
+			scope.distance_top = scope.MARGIN_DISTANCE_TOP;
+			scope.DURATION = attr['parallaxDuration']===undefined?20:attr['parallaxDuration'];
 			
 			//if (element[0].className!='title_span answer ng-isolate-scope'){return false}
 			//console.log(element[0].className);
@@ -400,10 +401,9 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.viewportHeight = $window.innerHeight;
 				scope.parentElementHeight = element[0].parentElement.getBoundingClientRect()['height'];
 				scope.distY = scope.viewportHeight+scope.parentElementHeight;
-				scope.velocityY = parseInt(attr['parallax'].replace('%',''));
-				var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
+				//var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
 				//scope.velocityY = scope.velocityY/scale;
-				scope.velocityY = scope.velocityY;
+				//scope.velocityY = scope.velocityY;
 
 				scope.prev_scroll_dist = 0;
 				}
@@ -411,7 +411,6 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			function onScroll(e)
 				{
-				console.log(scope.st);
 				if (scope.st==true){return false}
 
 				scope.st = true;  //flag for marking runnig requestanimationframes
@@ -420,9 +419,9 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			function draw()
 				{
-
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
+				//debugger;
 				//determine viewport location
 				if (top_pos>scope.viewportHeight&&top_pos>0)
 					{
@@ -438,29 +437,36 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 				//if (element[0].className.indexOf('bgimg')!=-1){console.log(element)};
 				var distCurY = top_pos+scope.parentElementHeight;
+				//console.log(distCurY);
 				var relative = parseInt(distCurY/scope.distY*100);
-				relative = (1-relative/100)*scope.velocityY;
+				//relative = (1-relative/100)*scope.velocityY;
+				relative = (1-relative/100);
+				//delta - it is real distance for moving, which is deviding by duration
+				//relative = relative/100;
 				var delta = relative - scope.final_relative;
-
-				//console.log(delta);
+				//console.log(delta,relative,scope.final_relative);
 				if (Math.abs(delta)>0.01)
 					{
 					var t = delta/scope.DURATION;
 					if (t>=0)
-						t = t<=0.01?0.01*scope.DURATION:t;
+						t = t<=0.00001?0.00001:t;
 					else
-						t = t>-0.01?-0.01*scope.DURATION:t;
-
-					
+						t = t>-0.00001?-0.00001:t;
 					scope.final_relative = scope.final_relative+t;
+					//console.log('after',scope.final_relative,t);
+
+					if (element[0].className.indexOf('bgimg_hand')==0||element[0].className.indexOf('question')!=-1)
+						{
+						console.log(scope.final_relative,element[0].className);
+						}
 					}
 				else
 					{
 					scope.st = false;
 					return false;
 					}
-				console.log(scope.final_relative);
-				element.css({'transform':'translate3d(0%,'+scope.final_relative*(-1)+'%,0)'});
+				scope.distance_top = scope.final_relative*scope.MARGIN_DISTANCE_TOP;
+				element.css({'transform':'translate3d(0px,'+scope.distance_top+'px,0)'});
 				window.requestAnimationFrame(scope.draw);
 
 
