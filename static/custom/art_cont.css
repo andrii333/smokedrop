@@ -311,16 +311,15 @@
 
 .navbar-default .navbar-nav li
 	{
-	-webkit-backface-visibility: hidden;
-	-webkit-transform: scale(1);
+//	-webkit-backface-visibility: hidden;
+//	-webkit-transform: scale(1);
 
 	}
 
-.navbar-default .navbar-nav li:hover
+.navbar-default .navbar-nav li:hover a
 	{
-
-	-webkit-animation:flipInX 1s;
-	animation:flipinX 1s;
+	-webkit-animation:swing 1s;
+	animation:swing 0.5s;
 	background:none !important;
 	}
 
