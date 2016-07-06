@@ -377,7 +377,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			scope.viewportHeight = 0;
 			scope.final_relative = 0;
-			scope.MARGIN_DISTANCE_TOP = parseInt(attr['parallaxTop'].replace('px',''));
+			scope.MARGIN_DISTANCE_TOP = parseInt(attr['parallaxTop'].replace('%',''));
 			scope.distance_top = scope.MARGIN_DISTANCE_TOP;
 			scope.DURATION = attr['parallaxDuration']===undefined?20:attr['parallaxDuration'];
 			
@@ -401,7 +401,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.viewportHeight = $window.innerHeight;
 				scope.parentElementHeight = element[0].parentElement.getBoundingClientRect()['height'];
 				scope.distY = scope.viewportHeight+scope.parentElementHeight;
-				//var scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
+				//scope.scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
 				//scope.velocityY = scope.velocityY/scale;
 				//scope.velocityY = scope.velocityY;
 
@@ -465,8 +465,10 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					scope.st = false;
 					return false;
 					}
+
 				scope.distance_top = scope.final_relative*scope.MARGIN_DISTANCE_TOP;
-				element.css({'transform':'translate3d(0px,'+scope.distance_top+'px,0)'});
+				console.log(scope.distance_top)
+				element.css({'transform':'translate3d(0%,'+scope.distance_top+'%,0)'});
 				window.requestAnimationFrame(scope.draw);
 
 
