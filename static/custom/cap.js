@@ -377,14 +377,49 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 			scope.viewportHeight = 0;
 			scope.final_relative = 0;
-			scope.MARGIN_DISTANCE_TOP = parseInt(attr['parallaxTop'].replace('%',''));
-			scope.distance_top = scope.MARGIN_DISTANCE_TOP;
+
+			scope.TOP = attr['parallaxTop']==undefined?false:true;			
+			scope.LEFT = attr['parallaxLeft']==undefined?false:true;			
+			scope.SCALE = attr['parallaxScale']==undefined?false:true;			
+			scope.ROTATEX = attr['parallaxRotateX']==undefined?false:true;			
+			scope.ROTATEY = attr['parallaxRotateY']==undefined?false:true;			
+			scope.ROTATE = attr['parallaxRotate']==undefined?false:true;			
+
+
+			
 			scope.DURATION = attr['parallaxDuration']===undefined?20:attr['parallaxDuration'];
-			
-			//if (element[0].className!='title_span answer ng-isolate-scope'){return false}
-			//console.log(element[0].className);
-			
-	
+			scope.MARGIN_DISTANCE_TOP = scope.TOP?parseInt(attr['parallaxTop'].replace('%','')):undefined;
+			scope.MARGIN_DISTANCE_LEFT = scope.LEFT?parseInt(attr['parallaxLeft'].replace('%','')):undefined;
+
+			if (scope.SCALE)
+				{
+				scope.SCALE_MIN = parseInt(attr['parallaxScale'].split(':')[0]);
+				scope.SCALE_MAX = parseInt(attr['parallaxScale'].split(':')[1]);
+				scope.MARGIN_DISTANCE_SCALE = scope.SCALE_MAX - scope.SCALE_MIN;
+				}
+
+			if (scope.ROTATEX)
+				{
+				scope.ROTATEX_MIN = parseInt(attr['parallaxRotateX'].split(':')[0]);
+				scope.ROTATEX_MAX = parseInt(attr['parallaxRotateX'].split(':')[1]);
+				scope.MARGIN_DISTANCE_ROTATEX = scope.ROTATEX_MAX - scope.ROTATEX_MIN;
+				}
+
+
+			if (scope.ROTATEY)
+				{
+				scope.ROTATEY_MIN = parseInt(attr['parallaxRotateY'].split(':')[0]);
+				scope.ROTATEY_MAX = parseInt(attr['parallaxRotateY'].split(':')[1]);
+				scope.MARGIN_DISTANCE_ROTATEY = scope.ROTATEY_MAX - scope.ROTATEY_MIN;
+				}
+
+			if (scope.ROTATE)
+				{
+				scope.ROTATE_MIN = parseInt(attr['parallaxRotate'].split(':')[0]);
+				scope.ROTATE_MAX = parseInt(attr['parallaxRotate'].split(':')[1]);
+				scope.MARGIN_DISTANCE_ROTATE = scope.ROTATE_MAX - scope.ROTATE_MIN;
+				}
+
 			scope.init();
 			$(window).on('scroll',scope.onScroll);
 
@@ -396,15 +431,13 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.onScroll();
 				}
 
+
+			//getDimensions - function calculate key measures of viewport and parentElement to understand the status of scrolling and actual values of all properties
 			function getDimensions()
 				{
 				scope.viewportHeight = $window.innerHeight;
 				scope.parentElementHeight = element[0].parentElement.getBoundingClientRect()['height'];
 				scope.distY = scope.viewportHeight+scope.parentElementHeight;
-				//scope.scale = scope.parentElementHeight/element[0].getBoundingClientRect()['height']; //determien scale koef to recalc velocity, because translate3d shift elem relative to its height but parent
-				//scope.velocityY = scope.velocityY/scale;
-				//scope.velocityY = scope.velocityY;
-
 				scope.prev_scroll_dist = 0;
 				}
 
@@ -421,7 +454,6 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				{
 				//get parent element
 				var top_pos = element[0].parentElement.getBoundingClientRect()['top'];
-				//debugger;
 				//determine viewport location
 				if (top_pos>scope.viewportHeight&&top_pos>0)
 					{
@@ -435,16 +467,11 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					}
 
 
-				//if (element[0].className.indexOf('bgimg')!=-1){console.log(element)};
 				var distCurY = top_pos+scope.parentElementHeight;
-				//console.log(distCurY);
 				var relative = parseInt(distCurY/scope.distY*100);
-				//relative = (1-relative/100)*scope.velocityY;
 				relative = (1-relative/100);
 				//delta - it is real distance for moving, which is deviding by duration
-				//relative = relative/100;
 				var delta = relative - scope.final_relative;
-				//console.log(delta,relative,scope.final_relative);
 				if (Math.abs(delta)>0.01)
 					{
 					var t = delta/scope.DURATION;
@@ -453,22 +480,72 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					else
 						t = t>-0.00001?-0.00001:t;
 					scope.final_relative = scope.final_relative+t;
-					//console.log('after',scope.final_relative,t);
 
+/*
 					if (element[0].className.indexOf('bgimg_hand')==0||element[0].className.indexOf('question')!=-1)
 						{
 						console.log(scope.final_relative,element[0].className);
 						}
+*/
+
 					}
 				else
 					{
 					scope.st = false;
 					return false;
 					}
+				
+				
 
-				scope.distance_top = scope.final_relative*scope.MARGIN_DISTANCE_TOP;
-				console.log(scope.distance_top)
-				element.css({'transform':'translate3d(0%,'+scope.distance_top+'%,0)'});
+				value = '';
+	
+				//POSITION TOP
+				if (scope.TOP)
+					scope.distance_top = scope.final_relative*scope.MARGIN_DISTANCE_TOP;
+				else
+					scope.distance_top = 0;
+
+				//POSITION LEFT
+				if (scope.LEFT)
+					scope.distance_left = scope.final_relative*scope.MARGIN_DISTANCE_LEFT;
+				else
+					scope.distance_left = 0;
+
+				
+				var value = 'translate3d('+scope.distance_left+'%,'+scope.distance_top+'%,0)';
+
+				//SCALE
+				if (scope.SCALE)
+					{
+					scope.scale_transform = scope.SCALE_MIN+scope.final_relative*scope.MARGIN_DISTANCE_SCALE;
+					value = value+' scale('+scope.scale_transform/100+')';
+					}
+			
+				//ROTATEX
+				if (scope.ROTATEX)
+					{
+					scope.distance_rotateX = scope.ROTATEX_MIN+scope.final_relative*scope.MARGIN_DISTANCE_ROTATEX;
+					value = value+' rotateX('+scope.distance_rotateX+'deg)';	
+					}
+			
+
+				//ROTATEY
+				if (scope.ROTATEY)
+					{
+					scope.distance_rotateY = scope.ROTATEY_MIN+scope.final_relative*scope.MARGIN_DISTANCE_ROTATEY;
+					value = value+' rotateY('+scope.distance_rotateY+'deg)';	
+					}
+	
+				//ROTATE
+				if (scope.ROTATE)
+					{
+					scope.distance_rotate = scope.ROTATE_MIN+scope.final_relative*scope.MARGIN_DISTANCE_ROTATE;
+					value = value+' rotate('+scope.distance_rotate+'deg)';	
+					console.log(scope.ROTATE_MIN,scope.final_relative,scope.MARGIN_DISTANCE_ROTATE);
+					}
+				
+
+				element.css({'transform':value});
 				window.requestAnimationFrame(scope.draw);
 
 
