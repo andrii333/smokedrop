@@ -541,7 +541,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					{
 					scope.distance_rotate = scope.ROTATE_MIN+scope.final_relative*scope.MARGIN_DISTANCE_ROTATE;
 					value = value+' rotate('+scope.distance_rotate+'deg)';	
-					console.log(scope.ROTATE_MIN,scope.final_relative,scope.MARGIN_DISTANCE_ROTATE);
+					//console.log(scope.ROTATE_MIN,scope.final_relative,scope.MARGIN_DISTANCE_ROTATE);
 					}
 				
 
@@ -573,13 +573,18 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 		scope:{},
 		link:function(scope,element,attr)
 			{
+			//cancel scroll handler for every browser except chrome
+			//if (navigator.vendor.toLowerCase().indexOf('google')==-1)
+			//	return false;
+
+
 			scope.init = init;
 			scope.onScroll = onScroll;
 
 
-			scope.DURATION = 7;   //duration in frames (1s = 60 frames)  !10
+			scope.DURATION = 10;   //duration in frames
 			scope.TRASHHOLD = 1000;  //number ov events to handle   !50
-			scope.DISTANCE = parseInt(screen.height/13);  //number of pixels to scroll for one event
+			scope.DISTANCE = parseInt(screen.height/5);  //number of pixels to scroll for one event
 			scope.DECREASE = -1;  //decrease * kolvo_e - as many events - so shorter distance !0.1
 			scope.DURATION_INCREASE = 5;  //increase up to trashhold in * times   !1.8
 			
@@ -617,6 +622,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 			function onScroll(e)
 				{
 
+
 				if (!e){e = window.event}
 				e.preventDefault();
 				//for mozilla
@@ -626,6 +632,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					}
 		
 				var distance = e['originalEvent']['deltaY'];
+				//console.log(e);
 				
 				//check on direction changes
 				var sign_minus = scope.events.filter(function(el){return el['Distance']<0});
@@ -666,15 +673,22 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				evt['PrevDistance'] = 0;
 				//var dur = parseInt(scope.DURATION*(1+(kolvo_e/scope.TRASHHOLD)*scope.DURATION_INCREASE))
 			//	evt['Duration'] = (scope.DURATION*scope.DURATION)/parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
-				evt['Duration'] = parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
+				//evt['Duration'] = parseInt(ease_quadratic(kolvo_e,scope.DURATION,scope.DURATION*scope.DURATION_INCREASE,scope.TRASHHOLD));
 				evt['EllapsedFrames'] = 0;
-				var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
+				//var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
 				//console.log('dis',dis);
-				//evt['Distance'] = distance>0?dis:-dis;
-				evt['Distance'] = distance;
-
+				
+				if (Math.abs(distance)>scope.DISTANCE)
+					var dis = distance>0?scope.DISTANCE:-scope.DISTANCE;
+				else
+					var dis = distance;
+				
+				var dur = parseInt(Math.abs(dis)/5);
+				dur = dur>20?20:dur;
+				evt['Duration'] = dur;
+				evt['Distance'] = dis;
 				scope.events.push(evt);
-				//console.log(scope.events.length);
+				//console.log(scope.events);
 				function draw(ts)
 					{
 	
@@ -687,15 +701,15 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					//control frame length
 					scope.events[0]['LastFrame'] = scope.events[0]['LastFrame']===undefined?0:scope.events[0]['LastFrame'];
 					var delta = ts - scope.events[0]['LastFrame'];
-					var kolvo_frames = parseInt(delta/16);	
-					if (isNaN(delta)==true){kolvo_frames = 1};
-					kolvo_frames = kolvo_frames>2?2:kolvo_frames;
+					//var kolvo_frames = parseInt(delta/16);	
+					//if (isNaN(delta)==true){kolvo_frames = 1};
+					//kolvo_frames = kolvo_frames>2?2:kolvo_frames;
 
-					kolvo_frames = 1;
+					var kolvo_frames = 1;
 
-					scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
+					//scope.prev_t = scope.prev_t===undefined?0:scope.prev_t;
 					//console.log(ts-scope.prev_t,delta);
-					scope.prev_t = ts;
+					//scope.prev_t = ts;
 					scope.count = scope.count===undefined?0:scope.count;
 					scope.count = scope.count+1;
 					//console.log(scope.count);
@@ -715,7 +729,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					//decorators.start('scroll','draw');
 					var final_scroll = 0;
 
-					var frames = [];
+					//var frames = [];
 					for (var each in scope.events)
 						{
 						scope.events[each]['LastFrame'] = ts;
@@ -723,7 +737,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						var share = scope.events[each]['EllapsedFrames']/scope.events[each]['Duration'];
 						var total_scroll = parseInt(share*scope.events[each]['Distance']);
 						final_scroll = final_scroll+(total_scroll - scope.events[each]['PrevDistance']);
-						frames.push(scope.events[each]['EllapsedFrames']);
+						//frames.push(scope.events[each]['EllapsedFrames']);
 						scope.events[each]['PrevDistance'] = total_scroll;
 						}
 					//console.log(frames.join(':'));
@@ -731,8 +745,9 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						{
 						return el['Duration']>=el['EllapsedFrames']
 						})
-					//console.log(final_scroll);
-
+				//	if (Math.abs(final_scroll)>50)
+				//		final_scroll=final_scroll>0?50:-50;
+					console.log(final_scroll);
 					window.scrollBy(0,final_scroll);
 
 					}  //close draw function
