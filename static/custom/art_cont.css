@@ -238,9 +238,12 @@
 
 
 
+
+
 .black_plaha
 	{
 	-display:none;
+	transform:translateZ(0);
 	width:140%;
 	margin-left:-20%;
 	position:fixed;
@@ -281,6 +284,7 @@
 	border-radius:0px;
 	z-index:1000;
 	transition:all ease 1s;
+	transform:translateZ(0);
 
 	}
 

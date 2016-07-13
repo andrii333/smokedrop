@@ -544,7 +544,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 					//console.log(scope.ROTATE_MIN,scope.final_relative,scope.MARGIN_DISTANCE_ROTATE);
 					}
 				
-
+				value = value+' translateZ(0)';
 				element.css({'transform':value});
 				window.requestAnimationFrame(scope.draw);
 
@@ -684,7 +684,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 					var dis = distance;
 				
 				var dur = parseInt(Math.abs(dis)/5);
-				dur = dur>20?20:dur;
+				dur = dur>7?7:dur;
 				evt['Duration'] = dur;
 				evt['Distance'] = dis;
 				scope.events.push(evt);
@@ -890,7 +890,7 @@ app.directive('animateScroll',function($window)
 			function init()
 				{
 				scope.getDimensions();
-				el.style['opacity'] = '0';
+		//		el.style['opacity'] = '0';
 				scope.finished = false; //animation is finished (prevent scrol handling)
 				}
 
@@ -902,7 +902,7 @@ app.directive('animateScroll',function($window)
 				var dist = -$(window).scrollTop() + scope.elemTopPos;
 				if (dist/scope.viewportHeight<0.7)
 					{
-					el.style['opacity'] = '1'; //show element
+				//	el.style['opacity'] = '1'; //show element
 					$(el).addClass(attrs['animateScroll']); //set animated class
 					scope.finished = true;
 					scope.$apply();
