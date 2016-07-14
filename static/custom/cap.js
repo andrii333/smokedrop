@@ -353,6 +353,75 @@ app.controller('ContactController',function($scope)
 //CAPSULEFOR <angularjs_frame;CLOSE>
 
 
+app.directive('cropImg',function()
+	{
+	return {
+		scope:{},
+		link:function(scope,element,attr)
+			{
+			scope.get_dimensions = get_dimensions;
+			
+			$(window).on('resize',scope.get_dimensions);
+			element.on('load',scope.get_dimensions);
+
+
+			//scope.get_dimensions();	
+			function get_dimensions()
+				{
+				//var h = window.innerHeight;
+				//var w = window.innerWidth;
+				var parent_dimensions = element.parent()[0].getBoundingClientRect();
+				var h = parent_dimensions['height'];
+				var w = parent_dimensions['width'];
+				var img_dimensions = element[0].getBoundingClientRect();
+				var h_img = img_dimensions['height'];
+				var w_img = img_dimensions['width'];
+
+				var koef = w/w_img;
+				if (h_img*koef>h)
+					{
+					element.css(
+						{
+						'width':'100%',
+						'height':'auto',
+						'margin-left':'0%'
+						});
+					element.css({'width':'100%','height':'auto'});
+					}
+				else
+					{
+					var new_w_img = w_img*(h/h_img);
+					var rate = (1-new_w_img/w)/2*100;
+					
+					//debugger;
+					element.css(
+						{
+						'width':'auto',
+						'height':'100%',
+						'margin-left':rate+'%'
+						});
+					}
+
+				//debugger;
+				}
+
+			}
+	
+
+	}
+
+
+	})
+
+
+
+
+
+
+
+
+
+
 /**
  *
  *@directive
