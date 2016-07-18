@@ -368,16 +368,25 @@ app.directive('cropImg',function()
 			//scope.get_dimensions();	
 			function get_dimensions()
 				{
-				//var h = window.innerHeight;
-				//var w = window.innerWidth;
-				var parent_dimensions = element.parent()[0].getBoundingClientRect();
+				var parent_element = element.parent();	
+				//!!! not conventional case - for safe case get transform property, cache it, remove, and return after all dimensions will be ready
+				var cache_transform = parent_element.css('transform');
+				parent_element.css(
+					{
+					'transform':'',
+					'visibility':'hidden'
+					});
+				var parent_dimensions = parent_element[0].getBoundingClientRect();
 				var h = parent_dimensions['height'];
+				console.log($('.bgimg_hand')[0].getBoundingClientRect()['height']);
+				//debugger;	
 				var w = parent_dimensions['width'];
 				var img_dimensions = element[0].getBoundingClientRect();
 				var h_img = img_dimensions['height'];
 				var w_img = img_dimensions['width'];
-
 				var koef = w/w_img;
+				console.log(h_img*koef,w_img*(h/h_img));				
+				//debugger;
 				if (h_img*koef>h)
 					{
 					element.css(
@@ -401,7 +410,15 @@ app.directive('cropImg',function()
 						'margin-left':rate+'%'
 						});
 					}
-
+				
+				console.log(h,w,h_img,w_img,rate,new_w_img);
+				//debugger;	
+				//return previous state (transforms and visibility)
+				parent_element.css(
+					{
+					'transform':cache_transform,
+					'visibility':'visible'
+					});
 				//debugger;
 				}
 
