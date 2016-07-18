@@ -76,10 +76,8 @@ body
 		{
 		height:60px;
 		padding:5px;
-		border-radius:5px;
 		position:absolute;
 		top:10px;
-		background:#32c8de;	
 		z-index:2;
 		box-shadow:0px 0px 5px rgb(167, 167, 167);	
 		}
@@ -240,12 +238,10 @@ body
 		{
 		height:50px;
 		padding:1px;
-		border-radius:5px;
 		position:relative;
 		top:250px;
 		margin-left:auto;
 		margin-right:auto;
-		background:#32c8de;
 		left:0px;
 		width:200px;
 		}
@@ -402,12 +398,10 @@ body
 		{
 		height:53px;
 		padding:2px;
-		border-radius:5px;
 		position:relative;
 		top:250px;
 		margin-left:auto;
 		margin-right:auto;
-		background:#32c8de;
 		left:0px;
 		width:220px;	
 		}
@@ -563,12 +557,10 @@ body
 		{
 		height:60px;
 		padding:5px;
-		border-radius:5px;
 		position:relative;
 		margin-left:auto;
 		margin-right:auto;
 		top:250px;
-		background:#32c8de;
 		left:0px;
 		width:250px;	
 		}
@@ -936,12 +928,26 @@ body
 	}
 
 
+.item img
+	{
+	transform:rotate(-20deg) scale(1.5);
+	transition:transform ease 1s;
+	}
+
+
+
+.item img:hover
+	{
+	transform:rotate(0deg) scale(1);
+	}
 
 
 .steps_container .steps
 	{
 	text-align:center;
 	transform:translateZ(0) scale(0);
+	background:#3e6c93;
+	box-shadow:0px 0px 4px #000000;
 	}
 
 .steps_container .periods
@@ -1055,6 +1061,23 @@ body
 	height:auto;
 	margin:10%;
 	}
+
+/*for top line of box-shadow-block*/
+/*recovering styles from base theme*/
+.box-shadow-block
+	{
+	border-top-color:#3e6c93 !important;
+	}
+.bg-color
+	{
+	background-color:#3e6c93 !important;
+	}
+
+.block-heading-ten h3  /*color to text of every box-card*/
+	{
+	color:#3e6c93 !important;
+	}
+
 
 
 .item_container .item .up
