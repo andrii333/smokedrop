@@ -1254,17 +1254,6 @@ body
 	}
 
 
-.bgimg
-	{
-	background-image:url('../img/fon_2.jpg');
-	background-position:center center;
-	background-size:cover;
-	transform:translate3d(0%,0%,0);
-	height:150%;
-	width:100%;
-	-transition:transform 1s ease;
-	}
-
 
 
 /*//////////////////////////////////*/
