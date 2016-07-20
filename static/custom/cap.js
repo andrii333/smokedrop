@@ -456,6 +456,7 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 			scope.getDimensions = getDimensions;
 			scope.onScroll = onScroll;
 			scope.draw = draw;
+			scope.ease = cubic_in_out;
 
 
 			//decorators.registr(scope,'parallax');
@@ -515,7 +516,19 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 				scope.getDimensions();
 				scope.st = false;
 				scope.onScroll();
+
 				}
+
+
+			function cubic_in_out (t, b, c, d) 
+				{
+				t /= d/2;
+				if (t < 1)
+					 return c/2*t*t*t + b;
+				t -= 2;
+				return c/2*(t*t*t + 2) + b;
+				};
+
 
 
 			//getDimensions - function calculate key measures of viewport and parentElement to understand the status of scrolling and actual values of all properties
@@ -555,7 +568,15 @@ app.directive('parallax',function($window,$timeout,decorators,$rootScope)
 
 				var distCurY = top_pos+scope.parentElementHeight;
 				var relative = parseInt(distCurY/scope.distY*100);
+			//debugger;
 				relative = (1-relative/100);
+			//debugger;
+			//	relative = relative*10000;
+			//debugger;
+			//	relative = scope.ease(relative,0,100,10000)
+			//debugger;
+			//	relative = relative/100;	
+				//console.log(relative);
 				//delta - it is real distance for moving, which is deviding by duration
 				var delta = relative - scope.final_relative;
 				if (Math.abs(delta)>0.01)
@@ -763,7 +784,6 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				evt['EllapsedFrames'] = 0;
 				//var dis = scope.DISTANCE*(1-scope.DECREASE*(kolvo_e/scope.TRASHHOLD));
 				//console.log('dis',dis);
-				
 				if (Math.abs(distance)>scope.DISTANCE)
 					var dis = distance>0?scope.DISTANCE:-scope.DISTANCE;
 				else
@@ -774,7 +794,8 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				evt['Duration'] = dur;
 				evt['Distance'] = dis;
 				scope.events.push(evt);
-				//console.log(scope.events);
+				console.log(dis,scope.DISTANCE);
+				console.log(scope.events);
 				function draw(ts)
 					{
 	
@@ -833,7 +854,7 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 						})
 				//	if (Math.abs(final_scroll)>50)
 				//		final_scroll=final_scroll>0?50:-50;
-					console.log(final_scroll);
+				//	console.log(final_scroll);
 					window.scrollBy(0,final_scroll);
 
 					}  //close draw function
