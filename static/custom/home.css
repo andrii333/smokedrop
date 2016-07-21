@@ -2,7 +2,7 @@
 
 body
 	{
-	overflow:hidden;
+	-overflow:hidden;
 	}
 
 
@@ -676,7 +676,7 @@ body
 	width:100%;
 	height:100%;
 	position:relative;
-	
+	z-index:4;	
 	overflow:hidden;
 	}
 
@@ -719,7 +719,7 @@ body
 	z-index:2;
 	top:0px;
 	left:0px;
-	
+	z-index:5	
 
 	}
 
@@ -884,7 +884,7 @@ body
 -	border-width:1px;
 	position:relative;
 	background:white;
-	z-index:1;
+	z-index:4;
 	margin-top:-10px;
 	}
 
@@ -1243,7 +1243,7 @@ body
 -	border-width:1px;
 	position:relative;
 	margin-top:40px;
-	will-change:transform;
+	z-index:3;
 	}
 
 
@@ -1268,11 +1268,11 @@ body
 
 .container_3 .bgimg
 	{
-	height:150%;
+	height:100%;
 	width:100%;
-	top:-50%;
 	left:0px;
 	position:relative;
+	overflow:hidden;
 	z-index:3;
 	}
 
@@ -1282,34 +1282,43 @@ body
 	background:url('../img/fon_2.jpg');
 	content:'';
 	position:fixed;
+	will-change:transform;
 	height:100%;
 	width:100%;
 	top:0px;
 	left:0px;
+	z-index:-1;
 	}
 
 
 .container_3 .bgimg_blur
 	{
-	height:150%;
+	height:100%;
 	width:50%;
 	left:0px;
 	right:0px;
-	top:-48%;
+	top:0px;
 	left:0px;
 	position:absolute;
-	z-index:4;
+	z-index:5;
 	margin:auto auto;
 	overflow:hidden;
-	
+	box-shadow:0px 0px 5px black;
 	}
 
 
 .container_3 .bgimg_blur::before
 	{
+	-webkit-filter:blur(5px);
 	content:'';
 	background:url('../img/fon_2.jpg');
-	background-attachment:fixed;
+	will-change:transform;
+	z-index:3;	
+	position:fixed;
+	height:100%;
+	width:100%;
+	top:10px;
+	left:0px;
 	}
 
 
@@ -1336,6 +1345,9 @@ body
 -	border-style:solid;
 -	border-width:1px;
 	margin-bottom:100px;
+	position:relative;
+	z-index:5;
+	background:white;
 	}
 
 
@@ -1379,6 +1391,8 @@ body
 	background-repeat:no-repeat;
 	background-size:cover;
 	background-position:center center;
+	position:relative;
+	z-index:5;
 	}
 
 
