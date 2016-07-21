@@ -2,7 +2,7 @@
 
 body
 	{
-	-overflow:hidden;
+	overflow-x:hidden;
 	}
 
 
@@ -1280,6 +1280,7 @@ body
 .container_3 .bgimg::before
 	{
 	background:url('../img/fon_2.jpg');
+	background-size:cover;
 	content:'';
 	position:fixed;
 	will-change:transform;
@@ -1310,8 +1311,10 @@ body
 .container_3 .bgimg_blur::before
 	{
 	-webkit-filter:blur(5px);
+	-moz-filter:blur(5px);
 	content:'';
 	background:url('../img/fon_2.jpg');
+	background-size:cover;
 	will-change:transform;
 	z-index:3;	
 	position:fixed;
