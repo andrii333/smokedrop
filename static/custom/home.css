@@ -1311,7 +1311,7 @@ body
 .container_3 .bgimg_blur::before
 	{
 	-webkit-filter:blur(5px);
-	-moz-filter:blur(5px);
+	filter:url(blur.svg#blur);
 	content:'';
 	background:url('../img/fon_2.jpg');
 	background-size:cover;
