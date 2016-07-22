@@ -1271,9 +1271,10 @@ body
 	height:100%;
 	width:100%;
 	left:0px;
-	position:relative;
+	position:absolute;
 	overflow:hidden;
 	z-index:3;
+	clip:rect(0px auto auto 0px);
 	}
 
 
@@ -1304,7 +1305,7 @@ body
 	z-index:5;
 	margin:auto auto;
 	overflow:hidden;
-	box-shadow:0px 0px 5px black;
+	clip:rect(0px auto auto 0px);
 	}
 
 
@@ -1325,13 +1326,21 @@ body
 	}
 
 
-.container_3 .img_container
+
+.container_3 .box_shadow_moz
 	{
-	-webkit-filter:blur(5px);
-	width:200%;
-	margin-left:-50%;
+	display:block;
 	height:100%;
-	
+	width:50%;
+	left:0px;
+	right:0px;
+	top:0px;
+	left:0px;
+	position:absolute;
+	z-index:6;
+	margin:auto auto;
+	box-shadow:0px 0px 5px black;
+
 	}
 
 
