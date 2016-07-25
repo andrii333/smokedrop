@@ -729,6 +729,11 @@ body
 /*//////SOME MAIN CONTAINERS////////*/
 
 
+.home_container
+	{
+	overflow-x:hidden;
+	}
+
 /*//////////////////////////////////*/
 /*//////CONTAINER 1/////////////////*/
 /*//////////////////////////////////*/
@@ -783,7 +788,6 @@ body
 	top:0px;
 	left:0px;
 	z-index:5;
-	overflow-x:hidden;
 	}
 
 
