@@ -310,6 +310,19 @@
 	}
 
 
+.navbar-header button
+	{
+	margin-right:50px !important;
+	margin-top:26px !important;
+	transition:all ease 1s;
+	}
+
+.after_scroll .navbar-header button
+	{
+	margin-top:16px !important;
+
+	}
+
 
 /*BRAND*/
 .navbar-default .navbar-brand
@@ -328,7 +341,7 @@
 	color:white;
 	cursor:pointer;
 	transition:all ease 1s;
-
+	width:100px;
 	}
 
 .navbar-default .navbar-brand:hover
