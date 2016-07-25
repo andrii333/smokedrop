@@ -47,6 +47,7 @@
 	.navbar-brand
 		{
 		left:15px;
+		font-size:30px !important;
 		}
 
 	/*left navigation menu*/
@@ -89,6 +90,18 @@
 
 
  	}
+
+
+@media (min-width: 380px)
+	{
+	/*brand*/
+	.navbar-brand
+		{
+		left:15px;
+		font-size:40px !important;
+		}
+
+	}
 
 @media (min-width: 768px) 
 	{
