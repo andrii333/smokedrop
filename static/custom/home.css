@@ -2,7 +2,6 @@
 
 body
 	{
-	overflow-x:hidden;
 	}
 
 
@@ -32,20 +31,24 @@ body
 
 	.home_container .answer, .question
 		{
-		font-size:40px;
-		width:200px;
 		text-shadow:0px 0px 13px rgb(121, 116, 116);
 		}
 
 	.home_container .question
 		{
 		top:100%;
+		font-size:25px;
+		width:150px;
+		left:15px;
 		}
 
 
 	.home_container .answer
 		{
 		top:30%;
+		font-size:25px;
+		width:150px;
+		right:15px;
 		}
 
 	/*for timeline*/
@@ -75,8 +78,8 @@ body
 
 	.timeline_row .steps
 		{
-		height:60px;
-		padding:5px;
+		height:52px;
+		padding:1px 4px 1px 4px;
 		position:absolute;
 		top:-10px;
 		z-index:2;
@@ -95,7 +98,7 @@ body
 
 	.steps h1
 		{
-		font-size:50px !important;
+		font-size:35px !important;
 		}
 
 
@@ -130,13 +133,14 @@ body
 
 	.item .up h3
 		{
-		font-size:33px;
+		font-size:22px;
 		}
 
 	.item .down h3
 		{
-		font-size:22px;
-		line-height:32px;
+		font-size:17px;
+		line-height:27px;
+		text-align:justify;
 		}
 
 	.container_2 .timeline_scale
@@ -149,6 +153,11 @@ body
 		left:5%;
 		}
 
+
+	.point
+		{
+		margin-left:-10px !important;
+		}
 
 	.left .point_left  /*SWITCH ON LEFT POINT FOR LEFT FRAME*/
 		{
@@ -174,12 +183,49 @@ body
 		background-size:10px 10px;
 		display:block;
 		}
-	
+
+	.bgimg_blur, .block-heading-four, .box_shadow_moz
+		{
+		width:70%;
+		}
+
+	.block-heading-four h3
+		{
+		font-size:20px !important;
+		line-height:34px !important;
+		}
+
+	.uote_sign
+		{
+		height:50px;
+		font-size:60px !important;
+		width:50px;
+		}
+	.quote-one-right
+		{
+		margin-left:8px !important;
+		text-align:justify;
+		}
+
  	}
 
 
 @media (min-width: 470px)
 	{
+	.quote_sign
+		{
+		height:115px !important;
+		font-size:120px !important;
+		width:60px !important;
+		}
+
+	.quote-one-right
+		{
+		margin-left:80px !important;
+		text-align:left;
+		}
+
+
 	.container_2 .right .periods
 		{
 		font-size:17px;
@@ -187,6 +233,40 @@ body
 	.container_2 .left .periods
 		{
 		font-size:17px;
+		}
+	.timeline_row .steps
+		{
+		height:60px;
+		padding:5px;
+		position:absolute;
+		top:-10px;
+		z-index:2;
+		box-shadow:0px 0px 5px rgb(167, 167, 167);	
+		}
+	.steps h1
+		{
+		font-size:50px !important;
+		}
+	.point
+		{
+		margin-left:auto !important;
+		}
+	.item .down h3
+		{
+		font-size:20px;
+		line-height:32px;
+		text-align:left;
+		}
+	.item .up h3
+		{
+		font-size:32px;
+		}
+
+
+	.block-heading-four h3
+		{
+		font-size:22px !important;
+		line-height:37px !important;
 		}
 
 	}
@@ -205,7 +285,17 @@ body
 		font-size:19px;
 		}
 
+	.bgimg_blur, .block-heading-four, .box_shadow_moz
+		{
+		width:60%;
+		}
 
+	.block-heading-four h3
+		{
+		font-size:25px !important;
+		line-height:40px !important;
+
+		}
 
 	}
 
@@ -257,8 +347,8 @@ body
 
 	.home_container .answer, .question
 		{
-		font-size:40px;
-		width:350px;
+		font-size:40px !important;
+		width:350px !important;
 		text-shadow:0px 0px 13px rgb(121, 116, 116);
 		}
 
@@ -389,6 +479,12 @@ body
 		background:url('../img/3.png');
 		background-size:10px 10px;
 		display:none;
+		}
+
+
+	.bgimg_blur, .block-heading-four, .box_shadow_moz
+		{
+		width:50%;
 		}
 
 
@@ -728,10 +824,14 @@ body
 /*//////////////////////////////////*/
 /*//////SOME MAIN CONTAINERS////////*/
 
-
-.home_container
+.color
 	{
-	overflow-x:hidden;
+	color:#79A6CC !important;
+	}
+
+.btn-color
+	{
+	background:#6DA7D8 !important;
 	}
 
 /*//////////////////////////////////*/
@@ -779,6 +879,15 @@ body
 	}
 
 
+.overflow_container
+	{
+	position:absolute;
+	height:200%;
+	width:100%;
+	overflow:hidden;
+
+	}
+
 .bgimg_hand_container
 	{
 	width:100%;
@@ -796,7 +905,7 @@ body
 .bgimg_hand
 	{
 	width:100%;
-	height:150%;
+	height:75%;
 
 	z-index:2;
 
@@ -814,7 +923,7 @@ body
 	-background-position:center center;
 	-background-size:cover;
 	position:absolute;
-	top:-120%;
+	top:-40%;
 
 	-webkit-animation:motion 3s infinite;
 	animation:motion 3s infinite;
@@ -830,18 +939,10 @@ body
 
 @-webkit-keyframes motion
 	{
-	0% {top:-120%}
-	50% {top:-118%}
-	100% {top:-120%}
+	0% {top:-40%}
+	50% {top:-38%}
+	100% {top:-40%}
 
-	}
-
-
-@-webkit-keyframes moving
-	{
-	0% {transform:scale(1) rotate(0)}
-	50% {transform:scale(0.95) rotate(2deg)}
-	100% {transform:scale(1) rotate(0)}
 	}
 
 
@@ -1347,9 +1448,12 @@ body
 	position:absolute;
 	transform:translate3d(0%,0%,0);
 	left:0px;
-	width:100%;
+	right:0px;
+	top:0px;
+	bottom:0px;
+	margin:auto auto;
 	z-index:101;
-	top:40%;
+	height:200px;
 	transition:transform 1s ease;
 	}
 
@@ -1384,7 +1488,6 @@ body
 .container_3 .bgimg_blur
 	{
 	height:100%;
-	width:50%;
 	left:0px;
 	right:0px;
 	top:0px;
@@ -1419,7 +1522,6 @@ body
 	{
 	display:block;
 	height:100%;
-	width:50%;
 	left:0px;
 	right:0px;
 	top:0px;
