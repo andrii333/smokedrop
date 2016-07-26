@@ -514,8 +514,8 @@ body
 
 	.home_container .answer, .question
 		{
-		font-size:40px;
-		width:350px;
+		font-size:40px !important;
+		width:350px !important;
 		text-shadow:0px 0px 0px rgb(121, 116, 116);
 		}
 
@@ -675,8 +675,8 @@ body
 
 	.home_container .answer, .question
 		{
-		font-size:50px;
-		width:450px;
+		font-size:50px !important;
+		width:450px !important;
 		text-shadow:0px 0px 0px rgb(121, 116, 116);
 		}
 
@@ -876,6 +876,7 @@ body
 .container_1 .bgimg img
 	{
 	height:100%;
+	transition:all ease 1s;
 	}
 
 
@@ -934,6 +935,7 @@ body
 .bgimg_hand img
 	{
 	-height:100%;
+	transition:all ease 1s;
 	}
 
 
@@ -1020,12 +1022,13 @@ body
 .shadow_plaha
 	{
 	position:absolute;
-	bottom:0px;
+	bottom:-10px;
 	box-shadow:0px 0px 5px 5px black;
 	height:10px;
 	background:white;
 	box-shadow:0px -7px 13px -3px black;
 	width:100%;
+	z-index:4;
 
 	}
 
@@ -1074,7 +1077,7 @@ body
 	position:relative;
 	background:white;
 	z-index:4;
-	margin-top:-10px;
+	margin-top:20px;
 	}
 
 
@@ -1503,6 +1506,7 @@ body
 .container_3 .bgimg_blur::before
 	{
 	-webkit-filter:blur(5px);
+	-moz-filter:blur(5px);
 	filter:url(blur.svg#blur);
 	content:'';
 	background:url('../img/fon_2.jpg');

@@ -973,6 +973,35 @@ app.directive('menuScroll',function()
 	})
 
 
+app.directive('setHeight',function()
+	{
+	return {
+
+		link:function(scope,element,attrs)
+			{
+			var height = attrs['setHeight'].replace('%','');
+			var viewport_height = window.innerHeight;
+			element.height(viewport_height*height/100);
+				debugger;
+			}
+
+	}
+	})
+
+app.directive('setWidth',function()
+	{
+	return {
+
+		link:function(scope,element,attrs)
+			{
+			var width = attrs['setWidth'].replace('%','');
+			var viewport_width = window.innerWidth;
+			element.width(viewport_width*width/100);
+			}
+
+		}
+	})
+
 
 
 app.directive('animateScroll',function($window)
