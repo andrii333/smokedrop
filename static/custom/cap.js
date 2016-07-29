@@ -53,21 +53,18 @@ app.controller('HomeController',function($scope)
 
 	})
 
-app.controller('ArticleController',function($scope)
+app.controller('ArticleController',function($scope,$timeout)
 	{
 
-	$(window).scrollTop(0); //after loading page little scrolled
-	$window = $(window);
-
+	$('body').scrollTop(0);
 
 	$scope.cur_menu = 'about_script';
 
 	$scope.go_to = function(el_id)
 		{
-		d = $('.right_col');
-		var top_level = d.offset()['top'];
-		$el = $('#'+el_id);
-		$('html,body').animate({scrollTop:$scope.tops[el_id]-80},500);
+		var top_pos = $('#'+el_id)[0].getBoundingClientRect()['top'];
+		var cur_pos = $('body').scrollTop();
+		$('body').animate({'scrollTop':top_pos+window.scrollY-200},500);
 		}
 
 
