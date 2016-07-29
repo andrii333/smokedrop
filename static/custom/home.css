@@ -876,7 +876,6 @@ body
 .container_1 .bgimg img
 	{
 	height:100%;
-	transition:all ease 1s;
 	}
 
 
@@ -935,7 +934,6 @@ body
 .bgimg_hand img
 	{
 	-height:100%;
-	transition:all ease 1s;
 	}
 
 
@@ -1022,11 +1020,11 @@ body
 .shadow_plaha
 	{
 	position:absolute;
-	bottom:-10px;
+	bottom:-12px;
 	box-shadow:0px 0px 5px 5px black;
-	height:10px;
+	height:12px;
 	background:white;
-	box-shadow:0px -7px 13px -3px black;
+	box-shadow:0px -10px 13px -3px black;
 	width:100%;
 	z-index:4;
 

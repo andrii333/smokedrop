@@ -218,17 +218,22 @@ app.controller('ContactController',function($scope)
 //CAPSULEFOR <angularjs_frame;CLOSE>
 
 
-app.directive('cropImg',function()
+app.directive('cropImg',function($timeout)
 	{
 	return {
 		scope:{},
 		link:function(scope,element,attr)
 			{
 			scope.get_dimensions = get_dimensions;
-			
-			$(window).on('resize',scope.get_dimensions);
-			element.on('load',scope.get_dimensions);
+			scope.resize = resize;
+	
+			function resize()
+				{
+				$timeout(scope.get_dimensions,0);
+				}
 
+			$(window).on('resize',scope.resize);
+			element.on('load',scope.get_dimensions);
 
 			//scope.get_dimensions();	
 			function get_dimensions()
@@ -256,22 +261,21 @@ app.directive('cropImg',function()
 					{
 					element.css(
 						{
-						'width':'100%',
+						'width':w+'px',
 						'height':'auto',
 						'margin-left':'0%'
 						});
-					element.css({'width':'100%','height':'auto'});
+					//element.css({'width':'100%','height':'auto'});
 					}
 				else
 					{
 					var new_w_img = w_img*(h/h_img);
 					var rate = (1-new_w_img/w)/2*100;
-					
 					//debugger;
 					element.css(
 						{
 						'width':'auto',
-						'height':'100%',
+						'height':h+'px',
 						'margin-left':rate+'%'
 						});
 					}
@@ -659,8 +663,8 @@ app.directive('scroll',function($window,$timeout,decorators,$rootScope,$timeout)
 				evt['Duration'] = dur;
 				evt['Distance'] = dis;
 				scope.events.push(evt);
-				console.log(dis,scope.DISTANCE);
-				console.log(scope.events);
+				//console.log(dis,scope.DISTANCE);
+				//console.log(scope.events);
 				function draw(ts)
 					{
 	
@@ -844,9 +848,31 @@ app.directive('setHeight',function()
 
 		link:function(scope,element,attrs)
 			{
-			var height = attrs['setHeight'].replace('%','');
-			var viewport_height = window.innerHeight;
-			element.height(viewport_height*height/100);
+		
+			//append new div to retrive precise dimensions of viewport
+
+			scope.set_height = set_height;
+			
+			function set_height()
+				{
+				var block = $('.for_viewport_dim');
+				if (block.length==0)
+					{
+					var div = $('<div></div>');
+					div.addClass('for_viewport_dim');
+					div.css({'width':'100%','height':'100%','display':'none'});
+					$('html').append(div);
+					}
+
+				var height = attrs['setHeight'].replace('%','');
+				var viewport_height = $('.for_viewport_dim').height();
+				$(element).height(viewport_height*height/100);
+				}
+			scope.set_height();
+			//$(window).on('resize',scope.set_height);
+
+
+
 			}
 
 	}
@@ -858,9 +884,28 @@ app.directive('setWidth',function()
 
 		link:function(scope,element,attrs)
 			{
-			var width = attrs['setWidth'].replace('%','');
-			var viewport_width = window.innerWidth;
-			element.width(viewport_width*width/100);
+
+			scope.set_width = set_width;
+
+
+			function set_width()
+				{
+				//append new div to retrive precise dimensions of viewport
+				var block = $('.for_viewport_dim');
+				if (block.length==0)
+					{
+					var div = $('<div></div>');
+					div.addClass('for_viewport_dim');
+					div.css({'width':'100%','height':'100%','display':'none'});
+					$('html').append(div);
+					}
+				var width = attrs['setWidth'].replace('%','');
+				var viewport_width = $('.for_viewport_dim').width();
+				$(element).width(viewport_width*width/100);
+				}
+			scope.set_width();
+		//	$(window).on('resize',scope.set_width);
+
 			}
 
 		}
