@@ -67,7 +67,6 @@ app.controller('ArticleController',function($scope,$timeout)
 		$('body').animate({'scrollTop':top_pos+window.scrollY-200},500);
 		}
 
-
 	})
 
 
@@ -842,68 +841,91 @@ app.directive('menuScroll',function()
 app.directive('setHeight',function()
 	{
 	return {
-
-		link:function(scope,element,attrs)
+		compile:function()
 			{
-		
-			//append new div to retrive precise dimensions of viewport
-
-			scope.set_height = set_height;
-			
-			function set_height()
+			return {
+			pre:function(scope,element,attrs)
 				{
-				var block = $('.for_viewport_dim');
-				if (block.length==0)
+		
+				//append new div to retrive precise dimensions of viewport
+
+				scope.set_height = set_height;
+			
+				function set_height()
 					{
-					var div = $('<div></div>');
-					div.addClass('for_viewport_dim');
-					div.css({'width':'100%','height':'100%','display':'none'});
-					$('html').append(div);
+					var block = $('.for_viewport_dim');
+					if (block.length==0)
+						{
+						var div = $('<div></div>');
+						div.addClass('for_viewport_dim');
+						div.css({'width':'100%','height':'100%','display':'none'});
+						$('html').append(div);
+						}
+
+					var height = attrs['setHeight'].replace('%','');
+					var viewport_height = $('.for_viewport_dim').height();
+					$(element).height(viewport_height*height/100);
 					}
+				scope.set_height();
+				//$(window).on('resize',scope.set_height);
 
-				var height = attrs['setHeight'].replace('%','');
-				var viewport_height = $('.for_viewport_dim').height();
-				$(element).height(viewport_height*height/100);
+				},
+			post:function()
+				{
+
+
 				}
-			scope.set_height();
-			//$(window).on('resize',scope.set_height);
 
-
+			   }
 
 			}
 
-	}
+		}
 	})
 
 app.directive('setWidth',function()
 	{
 	return {
 
-		link:function(scope,element,attrs)
+		compile:function()
 			{
-
-			scope.set_width = set_width;
-
-
-			function set_width()
-				{
-				//append new div to retrive precise dimensions of viewport
-				var block = $('.for_viewport_dim');
-				if (block.length==0)
+			return {
+				pre:function(scope,element,attrs)
 					{
-					var div = $('<div></div>');
-					div.addClass('for_viewport_dim');
-					div.css({'width':'100%','height':'100%','display':'none'});
-					$('html').append(div);
+
+					scope.set_width = set_width;
+
+
+					function set_width()
+						{
+						//append new div to retrive precise dimensions of viewport
+						var block = $('.for_viewport_dim');
+						if (block.length==0)
+							{
+							var div = $('<div></div>');
+							div.addClass('for_viewport_dim');
+							div.css({'width':'100%','height':'100%','display':'none'});
+							$('html').append(div);
+							}
+						var width = attrs['setWidth'].replace('%','');
+						var viewport_width = $('.for_viewport_dim').width();
+						$(element).width(viewport_width*width/100);
+						}
+					scope.set_width();
+				//	$(window).on('resize',scope.set_width);
+
+	
+					},
+				post:function()
+					{
+
 					}
-				var width = attrs['setWidth'].replace('%','');
-				var viewport_width = $('.for_viewport_dim').width();
-				$(element).width(viewport_width*width/100);
-				}
-			scope.set_width();
-		//	$(window).on('resize',scope.set_width);
+		
+
+			   	}
 
 			}
+
 
 		}
 	})
@@ -964,7 +986,25 @@ app.directive('animateScroll',function($window)
 
 
 
+app.directive('delayClass',function($timeout)
+	{
+	return {
+		link:function(scope,element,attrs)
+			{
 
+			var duration = attrs['delayDuration']===undefined?2000:attrs['delayDuration'];
+			var add_class = attrs['delayClass']===undefined?'':attrs['delayClass'];
+	
+			$timeout(function()
+				{
+				$(element).addClass(add_class);
+				},duration);
+
+			}
+	
+	}
+
+	})
 
 
 
