@@ -9,11 +9,11 @@
 			parallax
 			parallax-top="100%"
 			delay-class="top_pos"
-			delay-duration="1000"	
+			delay-duration="100"	
 			></div>
 
 
-		<div class="title" delay-class="bouncing animated bounceInRight" delay-duration="1500">
+		<div class="title" delay-class="bouncing animated bounceInRight" delay-duration="500">
 			<span>Read in details article</span>
 		</div>
 	</div>
@@ -22,7 +22,7 @@
 
 	<div class="block_container">
 		<div class="empt"></div>
-		<div class="left_col">
+		<div class="left_col" delay-class="animated bounceInDown bouncing" delay-duration="500">
 			<ul>
 				<li ng-click="go_to('about_article')" ng-class="{'active':cur_menu=='about_article'}">О статье</li>
 				<li ng-click="go_to('motivation')" ng-class="{'active':cur_menu=='motivation'}">Мотивация</li>

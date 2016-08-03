@@ -602,13 +602,13 @@
 	top:0px;
 	left:0px;
 	background-size:cover;
-	background:url('../img/sigarette.jpg');
+	background:url('../img/sigarette2.jpg');
 	}
 
 
 .article_container .title
 	{
-	width:50%;
+	width:500px;
 	padding:50px;
 	font-size:50px;
 	color:white;
@@ -616,15 +616,12 @@
 	text-align:right;
 	position:absolute;
 	top:40%;
-	right:50px;
+	right:20%;
 	z-index:4;
+	line-height:1.2;
 	display:none;
 	}
 
-.article_container .bouncing
-	{
-	display:block;
-	}
 
 
 .article_container .article_img .sigarette_hand
@@ -649,6 +646,7 @@
 	}
 
 
+
 /* CAPSULEFOR <article_img:mouse_move_img;CLOSE>  */
 
 
@@ -669,7 +667,7 @@
 
 .article_container .block_container
 	{
-	width:100%;
+	width:87%;
 	margin-top:0px;
 	padding-top:50px;
 	position:relative;
@@ -677,6 +675,7 @@
 	background:white;
 	z-index:5;
 	text-align:center;
+	margin-left:0px;
 	}
 
 
@@ -693,16 +692,23 @@
 	vertical-align:top;
 	height:auto;
 	display:inline-block;
-	width:200px;
-	
+	width:20%;
+	max-width:200px;
+	position:fixed;
+	top:200px;
+	right:0px;
+	background:rgba(62, 108, 147,0.7);
+	display:none;
 	}
+
 
 .article_container .left_col ul
 	{
-
-	border-right-color:gray;
+	list-style:none;
+	padding:0px;
+	border-right-color:rgb(236, 236, 236);
 	border-right-style:solid;
-	border-right-width:1px;
+	border-right-width:3px;
 
 	}
 
@@ -712,32 +718,20 @@
 
 .article_container .left_col ul li
 	{
-	font-size:17px;
+	font-size:14px;
 	cursor:pointer;
-	color:rgb(111, 152, 255);
-
-	width:80%;
-
-	border-radius:3px;
-	padding-left:3px;
-
-
-	border-color:white;
-	border-style:solid;
-	border-width:1px;
-	border-radius:3px; 
-
+	color:white;
+	width:100%;
+	max-width:200px;
+	padding:10px;
+	text-align:left;
 	}
 
 .article_container .left_col ul li:hover
 	{
-	border-color:rgb(218, 228, 255);
-	border-style:solid;
-	border-width:1px;
-	border-radius:3px; 
-
-	color:rgb(52, 99, 216);
--	background:rgb(218, 228, 255);
+	color:rgb(197, 197, 197);
+	background:#eee;
+	text-shadow:0px 1px 1px white;
 	}
 
 
@@ -753,10 +747,11 @@
 .article_container .right_col
 	{
 	display:inline-block;
-	width:500px;
 	vertical-align:top;
 	text-align:justify;
-	max-width:1000px;
+	width:70%;
+	max-width:700px;
+	padding-left:20px;
 	}
 
 
@@ -802,5 +797,9 @@
 
 
 
+.article_container .bouncing
+	{
+	display:block;
+	}
 
 
