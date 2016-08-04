@@ -4,13 +4,22 @@
 <div class="article_container">
 
 
-	<div class="article_img" set-width="100%" set-height="100%">
+	<div class="article_img" set-width="100%" set-height="220%">
+		<div class="article_img_before"
+			parallax
+			parallax-rotate="0:10"
+			parallax-scale="150:100"
+			>
+		</div>
 		<div class="sigarette_hand"
 			parallax
 			parallax-top="100%"
 			delay-class="top_pos"
-			delay-duration="100"	
-			></div>
+			delay-duration="100"
+			parallax
+			parallax-scale="90:110"
+			>
+		</div>
 
 
 		<div class="title" delay-class="bouncing animated bounceInRight" delay-duration="500">
@@ -19,25 +28,31 @@
 	</div>
 
 
-
-	<div class="block_container">
-		<div class="empt"></div>
-		<div class="left_col" delay-class="animated bounceInDown bouncing" delay-duration="500">
-			<ul>
-				<li ng-click="go_to('about_article')" ng-class="{'active':cur_menu=='about_article'}">О статье</li>
-				<li ng-click="go_to('motivation')" ng-class="{'active':cur_menu=='motivation'}">Мотивация</li>
-				<li ng-click="go_to('tricky_brain')" ng-class="{'active':cur_menu=='tricky_brain'}">Хитрый мозг</li>
-				<li ng-click="go_to('approach')" ng-class="{'active':cur_menu=='approach'}">Суть подхода</li>
-				<li ng-click="go_to('swap')" ng-class="{'active':cur_menu=='swap'}">(1) Замена</li>
-				<li ng-click="go_to('3mg')" ng-class="{'active':cur_menu=='3mg'}">(2) 3МГ</li>
-				<li ng-click="go_to('mix')" ng-class="{'active':cur_menu=='mix'}">(3) МИКС</li>
-				<li ng-click="go_to('drop')" ng-class="{'active':cur_menu=='drop'}">(4) Капля</li>
-				<li ng-click="go_to('no_nicotine')" ng-class="{'active':cur_menu=='no_nicotine'}">(5) Без никотина</li>
-				<li ng-click="go_to('conclusion')" ng-class="{'active':cur_menu=='conclusion'}">Вывод</li>
+	<div class="left_col" 
+		animate-scroll="animated bounceInRight bouncing"
+		when-scroll="160"
+		>
+		<ul>
+			<li ng-click="go_to('about_article')" ng-class="{'active':cur_menu=='about_article'}">О статье</li>
+			<li ng-click="go_to('motivation')" ng-class="{'active':cur_menu=='motivation'}">Мотивация</li>
+			<li ng-click="go_to('tricky_brain')" ng-class="{'active':cur_menu=='tricky_brain'}">Хитрый мозг</li>
+			<li ng-click="go_to('approach')" ng-class="{'active':cur_menu=='approach'}">Суть подхода</li>
+			<li ng-click="go_to('swap')" ng-class="{'active':cur_menu=='swap'}">(1) Замена</li>
+			<li ng-click="go_to('3mg')" ng-class="{'active':cur_menu=='3mg'}">(2) 3МГ</li>
+			<li ng-click="go_to('mix')" ng-class="{'active':cur_menu=='mix'}">(3) МИКС</li>
+			<li ng-click="go_to('drop')" ng-class="{'active':cur_menu=='drop'}">(4) Капля</li>
+			<li ng-click="go_to('no_nicotine')" ng-class="{'active':cur_menu=='no_nicotine'}">(5) Без никотина</li>
+			<li ng-click="go_to('conclusion')" ng-class="{'active':cur_menu=='conclusion'}">Вывод</li>
 			
-			</ul>
-		</div>
+		</ul>
+	</div>
 
+
+	<div class="block_container" 
+		animate-scroll="animated bounceInUp bouncing"
+		when-scroll="100"
+		>
+		<div class="empt"></div>
 
 		<div class="right_col">
 			<h3 id="about_article">&#x00a7 О Статье</h3>

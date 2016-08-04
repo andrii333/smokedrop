@@ -932,6 +932,7 @@ app.directive('setWidth',function()
 
 
 
+
 app.directive('animateScroll',function($window)
 	{
 	return {
@@ -942,6 +943,7 @@ app.directive('animateScroll',function($window)
 			scope.init = init;
 			scope.getDimensions = getDimensions;
 			var el = element[0];
+			var when_scroll = attrs['whenScroll']===undefined?undefined:parseInt(attrs['whenScroll'])/100;
 
 			scope.init();
 
@@ -963,10 +965,24 @@ app.directive('animateScroll',function($window)
 			$(window).scroll(function()
 				{
 				if (scope.finished==true){return false;}
-				var dist = -$(window).scrollTop() + scope.elemTopPos;
+		
+				var scroll_top = $(window).scrollTop();
+				var koef = scroll_top/scope.viewportHeight;
+
+				if (when_scroll!=undefined)
+					{
+					if (koef>when_scroll)
+						{
+						$(el).addClass(attrs['animateScroll']); //set animated class
+						scope.finished = true;
+						scope.$apply();
+						}
+					return false
+					}
+
+				var dist = -scroll_top + scope.elemTopPos;
 				if (dist/scope.viewportHeight<0.7)
 					{
-				//	el.style['opacity'] = '1'; //show element
 					$(el).addClass(attrs['animateScroll']); //set animated class
 					scope.finished = true;
 					scope.$apply();
@@ -994,7 +1010,7 @@ app.directive('delayClass',function($timeout)
 
 			var duration = attrs['delayDuration']===undefined?2000:attrs['delayDuration'];
 			var add_class = attrs['delayClass']===undefined?'':attrs['delayClass'];
-	
+
 			$timeout(function()
 				{
 				$(element).addClass(add_class);
