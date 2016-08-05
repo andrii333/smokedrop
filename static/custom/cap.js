@@ -244,14 +244,12 @@ app.directive('cropImg',function($timeout)
 					});
 				var parent_dimensions = parent_element[0].getBoundingClientRect();
 				var h = parent_dimensions['height'];
-				console.log($('.bgimg_hand')[0].getBoundingClientRect()['height']);
 				//debugger;	
 				var w = parent_dimensions['width'];
 				var img_dimensions = element[0].getBoundingClientRect();
 				var h_img = img_dimensions['height'];
 				var w_img = img_dimensions['width'];
 				var koef = w/w_img;
-				console.log(h_img*koef,w_img*(h/h_img));				
 				//debugger;
 				if (h_img*koef>h)
 					{
