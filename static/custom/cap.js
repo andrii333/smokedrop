@@ -244,7 +244,7 @@ app.directive('cropImg',function($timeout)
 					});
 				var parent_dimensions = parent_element[0].getBoundingClientRect();
 				var h = parent_dimensions['height'];
-				console.log($('.bgimg_hand')[0].getBoundingClientRect()['height']);
+				//console.log($('.bgimg_hand')[0].getBoundingClientRect()['height']);
 				//debugger;	
 				var w = parent_dimensions['width'];
 				var img_dimensions = element[0].getBoundingClientRect();
@@ -276,7 +276,7 @@ app.directive('cropImg',function($timeout)
 						});
 					}
 				
-				console.log(h,w,h_img,w_img,rate,new_w_img);
+				//console.log(h,w,h_img,w_img,rate,new_w_img);
 				//debugger;	
 				//return previous state (transforms and visibility)
 				parent_element.css(
