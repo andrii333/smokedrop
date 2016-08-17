@@ -217,12 +217,14 @@ app.controller('ContactController',function($scope)
 app.directive('cropImg',function($timeout)
 	{
 	return {
-		scope:{},
+		//scope:{},
 		link:function(scope,element,attr)
 			{
 			scope.get_dimensions = get_dimensions;
 			scope.resize = resize;
-	
+
+			var viewport = attr['cropImg']===''?false:true;
+
 			function resize()
 				{
 				$timeout(scope.get_dimensions,0);
@@ -234,18 +236,37 @@ app.directive('cropImg',function($timeout)
 			//scope.get_dimensions();	
 			function get_dimensions()
 				{
-				var parent_element = element.parent();	
+				var parent_element = element.parent();
+
+
 				//!!! not conventional case - for safe case get transform property, cache it, remove, and return after all dimensions will be ready
-				var cache_transform = parent_element.css('transform');
+				var cache_transform_parent = parent_element.css('transform');
 				parent_element.css(
 					{
 					'transform':'',
 					'visibility':'hidden'
 					});
-				var parent_dimensions = parent_element[0].getBoundingClientRect();
-				var h = parent_dimensions['height'];
-				//debugger;	
-				var w = parent_dimensions['width'];
+
+
+				var cache_transform_element = element.css('transform');
+				element.css(
+						{
+						'transform':'',
+						'visibility':'hidden'
+						});
+
+				if (viewport==false)
+					{
+					var parent_dimensions = parent_element[0].getBoundingClientRect();
+					var h = parent_dimensions['height'];
+					var w = parent_dimensions['width'];
+					}
+				else
+					{
+					var h = window.innerHeight;
+					var w = window.innerWidth;
+					}
+
 				var img_dimensions = element[0].getBoundingClientRect();
 				var h_img = img_dimensions['height'];
 				var w_img = img_dimensions['width'];
@@ -279,9 +300,17 @@ app.directive('cropImg',function($timeout)
 				//return previous state (transforms and visibility)
 				parent_element.css(
 					{
-					'transform':cache_transform,
+					'transform':cache_transform_parent,
 					'visibility':'visible'
 					});
+				element.css(
+						{
+						'transform':cache_transform_element,
+						'visibility':'visible'
+						});
+
+
+
 				//debugger;
 				}
 

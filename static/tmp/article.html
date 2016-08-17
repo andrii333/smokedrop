@@ -4,28 +4,63 @@
 <div class="article_container">
 
 
-	<div class="article_img" set-width="100%" set-height="220%">
-			<img class="article_img_before"
-				src="./static/img/look_down.jpg"
-	 			set-width="100%"
-	 			set-height="100%"
-		 		parallax
-		 		parallax-rotate="0:10"
-		 		parallax-scale="150:100"
+	<div class="article_img" set-width="100%" set-height="300%">
+			<div class="img_wrap"
+			 	set-height="200%"
+			 	set-width="100%"
 				>
-			</img>
-			<img class="sigarette_hand"
-				src="./static/img/sigarette_hand.png"
-	 			set-width="100%"
- 				set-height="100%"
- 				parallax
- 				parallax-top="100%"
- 				parallax-scale="90:110"
- 				delay-class="top_pos"
- 				delay-duration="100"
-				>
-			</img>
+				<img class="article_img_before"
+					 src="./static/img/look_down.jpg"
+					 parallax
+					 parallax-rotate="0:10"
+					 parallax-scale="150:100"
+					 crop-img="viewport"
+					>
+				</img>
+				<img class="sigarette_hand"
+					 src="./static/img/sigarette_hand.png"
+					 delay-class="top_pos"
+					 delay-duration="100"
+					 parallax
+					 parallax-top="100%"
+					 parallax-scale="80:110"
+					 crop-img="viewport"
+					>
+				</img>
 
+<!--
+				<div class="img_bg"
+			 		parallax
+			 		parallax-rotate="0:10"
+			 		parallax-scale="150:100"
+				 	set-width="100%"
+				 	set-height="100%"
+					>
+					<img class="article_img_before"
+						src="./static/img/look_down.jpg"
+						 style="height:950px;width:1900px;"
+						>
+					</img>
+				</div>
+				<div class="img_hand"
+		 			parallax
+	 				parallax-top="100%"
+					parallax-scale="80:110"
+				 	set-width="100%"
+				 	set-height="100%"
+					>
+					<img class="sigarette_hand"
+						src="./static/img/sigarette_hand.png"
+				 		delay-class="top_pos"
+				 		delay-duration="100"
+					 	style="height:950px;width:1900px;"
+						>
+					</img>
+				</div>
+				-->
+
+
+			</div>
 		<div class="title" delay-class="bouncing animated bounceInRight" delay-duration="500">
 			<span>Read in details article</span>
 		</div>

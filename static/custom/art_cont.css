@@ -557,9 +557,31 @@
 	top:0px;
 	left:0px;
 	background-size:cover;
-	
+
 	}
 
+.article_container .article_img .img_wrap
+	{
+	-position:fixed;
+	}
+
+.article_container .img_bg, .img_hand
+	{
+	height:100%;
+	width:100%;
+	position:fixed;
+	}
+
+
+.article_container .img_hand
+	{
+	margin-left:-150px;
+	}
+
+.article_container img
+	{
+	transform:translateZ(0);
+	}
 
 .article_container .article_img:after
 	{
@@ -614,7 +636,6 @@
 	z-index:3;
 	-transform:translateZ(0%,0%,0);
 	transition:top ease 1s;
-	
 
 	}
 
@@ -655,7 +676,8 @@
 	z-index:5;
 	text-align:center;
 	margin-left:0px;
-	display:none;
+	margin-top:-10%;
+	visibility: hidden;
 	}
 
 
@@ -780,6 +802,7 @@
 
 .article_container .bouncing
 	{
+	visibility:visible;
 	display:block;
 	}
 
