@@ -56,6 +56,7 @@ app.controller('HomeController',function($scope)
 app.controller('ArticleController',function($scope,$timeout)
 	{
 
+	$scope.mobile_menu = mobile_menu;
 	$('body').scrollTop(0);
 
 	$scope.cur_menu = 'about_script';
@@ -65,6 +66,22 @@ app.controller('ArticleController',function($scope,$timeout)
 		var top_pos = $('#'+el_id)[0].getBoundingClientRect()['top'];
 		var cur_pos = $('body').scrollTop();
 		$('body').animate({'scrollTop':top_pos+window.scrollY-200},500);
+		}
+
+
+	function mobile_menu(e)
+		{
+		var el = $('.article_container .left_col');
+
+		if (el.hasClass('mobile_show')==true)
+			el.removeClass('mobile_show')
+		else
+			el.addClass('mobile_show')
+			/*
+		var margin_right = el.css('margin-right');
+		margin_right = margin_right==='-200px'?'0px':'-200px';
+		el.animate({'margin-right':margin_right});
+		*/
 		}
 
 	})
