@@ -13,7 +13,7 @@
 					 src="./static/img/look_down.jpg"
 					 parallax
 					 parallax-rotate="0:10"
-					 parallax-scale="150:100"
+					 parallax-scale="160:120"
 					 crop-img="viewport"
 					>
 				</img>
@@ -71,19 +71,27 @@
 		animate-scroll="animated bounceInRight bouncing"
 		when-scroll="160"
 		>
-		<ul>
-			<li ng-click="go_to('about_article')" ng-class="{'active':cur_menu=='about_article'}">О статье</li>
-			<li ng-click="go_to('motivation')" ng-class="{'active':cur_menu=='motivation'}">Мотивация</li>
-			<li ng-click="go_to('tricky_brain')" ng-class="{'active':cur_menu=='tricky_brain'}">Хитрый мозг</li>
-			<li ng-click="go_to('approach')" ng-class="{'active':cur_menu=='approach'}">Суть подхода</li>
-			<li ng-click="go_to('swap')" ng-class="{'active':cur_menu=='swap'}">(1) Замена</li>
-			<li ng-click="go_to('3mg')" ng-class="{'active':cur_menu=='3mg'}">(2) 3МГ</li>
-			<li ng-click="go_to('mix')" ng-class="{'active':cur_menu=='mix'}">(3) МИКС</li>
-			<li ng-click="go_to('drop')" ng-class="{'active':cur_menu=='drop'}">(4) Капля</li>
-			<li ng-click="go_to('no_nicotine')" ng-class="{'active':cur_menu=='no_nicotine'}">(5) Без никотина</li>
-			<li ng-click="go_to('conclusion')" ng-class="{'active':cur_menu=='conclusion'}">Вывод</li>
-			
-		</ul>
+		<div class="ul_wrap">
+			<ul>
+				<li ng-click="go_to('about_article')" ng-class="{'active':cur_menu=='about_article'}">О статье</li>
+				<li ng-click="go_to('motivation')" ng-class="{'active':cur_menu=='motivation'}">Мотивация</li>
+				<li ng-click="go_to('tricky_brain')" ng-class="{'active':cur_menu=='tricky_brain'}">Хитрый мозг</li>
+				<li ng-click="go_to('approach')" ng-class="{'active':cur_menu=='approach'}">Суть подхода</li>
+				<li ng-click="go_to('swap')" ng-class="{'active':cur_menu=='swap'}">(1) Замена</li>
+				<li ng-click="go_to('3mg')" ng-class="{'active':cur_menu=='3mg'}">(2) 3МГ</li>
+				<li ng-click="go_to('mix')" ng-class="{'active':cur_menu=='mix'}">(3) МИКС</li>
+				<li ng-click="go_to('drop')" ng-class="{'active':cur_menu=='drop'}">(4) Капля</li>
+				<li ng-click="go_to('no_nicotine')" ng-class="{'active':cur_menu=='no_nicotine'}">(5) Без никотина</li>
+				<li ng-click="go_to('conclusion')" ng-class="{'active':cur_menu=='conclusion'}">Вывод</li>
+
+			</ul>
+		</div>
+		<div class="mobile_btn" ng-click="mobile_menu($event)">
+			<div>
+				<span class="glyphicon glyphicon-th-list" aria-hidden="true" ></span>
+			</div>
+		</div>
+
 	</div>
 
 
