@@ -1,6 +1,6 @@
 {
 
   "PATH":"/home/andrii/workshop/projects/smokedrop/",
-  "HOST":"192.168.0.103"
+  "HOST":"192.168.1.104"
   
 }
