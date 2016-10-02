@@ -6,10 +6,13 @@
 
 
 
-	<script src="./static/lib/angular.min.js"></script>
-	<script src="./static/lib/angular-ui-router.js"></script>  
-	<script src="./static/lib/jquery.min.js"></script>
-	<script src="./static/lib/bootstrap.min.js"></script>  
+	<script src="./static/lib/angular.min.js" defer></script>
+	<script src="./static/lib/angular-ui-router.js" defer></script>  
+	<script src="./static/lib/jquery.min.js"></script> 
+<!--	<script src="./jquery.min.js" defer></script>  -->
+	
+
+	<script src="./static/lib/bootstrap.min.js" defer></script>  
 	
 
 	<link rel="stylesheet" type="text/css" href="./static/lib/bootstrap.min.css">
@@ -19,12 +22,12 @@
 	<link rel="stylesheet" type="text/css" href="./static/lib/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="./static/lib/style.css">  
 	<link rel="stylesheet" type="text/css" href="./static/lib/skin-lblue.css">  
-	<link rel="stylesheet" type="text/css" href="./static/lib/custom.css">
+	<link rel="stylesheet" type="text/css" href="./static/lib/custom.css">  
+<!--	<link rel="stylesheet" type="text/css" href="./custom.css">    -->
 	<!--BRAVE theme-->
 
 
-	<script src="./static/custom/cap.js"></script>
-
+	<script src="./static/custom/cap.js" defer></script>
 
 	<link rel="stylesheet" type="text/css" href="./static/custom/art_cont.css">
 	<link rel="stylesheet" type="text/css" href="./static/custom/home.css">
@@ -34,12 +37,106 @@
 
 
 </head>
+<!--FOR FAST PRELOADER -->
+	<style>
 
 
+	.first_preloader
+		{
+		position:fixed;
+		top:0px;
+		left:0px;
+		width:100%;
+		height:100%;
+		background:black;
+		z-index:3050;
+
+		-opacity:0.3;
+		}
+
+
+	.first_preloader:after
+		{
+		content:'';
+		width:100px;
+		height:100px;
+		position:absolute;
+		top:0px;
+		bottom:0px;
+		left:0px;
+		right:0px;
+		margin:auto auto;
+		border-radius:150px;
+		border-width:4px 4px 4px 4px;
+		border-color:rgb(63, 63, 63) white rgb(63, 63, 63) white;
+		border-style:solid solid solid solid;
+
+		-webkit-animation:preloader ease 1s infinite;
+		-moz-animation:preloader ease 1s infinite;
+		animation:preloader ease 1s infinite;
+		}
+
+
+
+
+	@-webkit-keyframes preloader
+		{
+		from {transform:rotate(0deg)}
+		to {transform:rotate(-360deg)}
+		}
+
+	@-moz-keyframes preloader
+		{
+		from {transform:rotate(0deg)}
+		to {transform:rotate(-360deg)}
+		}
+
+	@keyframes preloader
+		{
+		from {transform:rotate(0deg)}
+		to {transform:rotate(-360deg)}
+		}
+
+
+
+
+	@-webkit-keyframes hide_preloader_anim
+		{
+		from {opacity:1}
+		to {opacity:0;visibility:hidden;}
+		}
+
+	@-moz-keyframes hide_preloader_anim
+		{
+		from {opacity:1}
+		to {opacity:0;visibility:hidden;}
+		}
+
+	@keyframes hide_preloader_anim
+		{
+		from {opacity:1}
+		to {opacity:0;visibility:hidden;}
+		}
+
+
+	.hide_preloader
+		{
+		-webkit-animation:hide_preloader_anim 0.8s ease;
+		-moz-animation:hide_reloader_anim 0.8s ease;
+		animation:hide_preloader_anim 0.8s ease;
+		animation-fill-mode:forwards;
+		-moz-animation-fill-mode:forwards;
+		-webkit-animation-fill-mode:forwards;
+		}
+
+
+
+
+	</style>
 
 <body ng-app="app" scroll>
 
-
+	<div class="first_preloader"></div>
 
 	<div ng-controller="MainController">
 
@@ -59,20 +156,26 @@
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
 						<li ui-sref-active="active">
-							<a ui-sref="home">
+							<a ui-sref="home"
+								ng-click="hide_menu('/home')"
+								>
 								<i class="fa fa-home"></i>
 								Home
 								<span class="sr-only">(current)</span>
 							</a>
 						</li>
 						<li ui-sref-active="active">
-							<a ui-sref="article">
+							<a ui-sref="article"
+								ng-click="hide_menu('/article')"
+								>
 								<i class="fa fa-list"></i>
 								Article
 							</a>
 						</li>
 						<li ui-sref-active="active">
-							<a ui-sref="contact">
+							<a ui-sref="contact"
+								ng-click="hide_menu('/contact')"
+								>
 								<i class="fa fa-phone"></i>
 								Contact
 							</a>
@@ -88,8 +191,14 @@
 
 
 	<!--for fast loading-->
-<!--
+
 	<div style="display:none">
+		<img src="./static/img/contact.jpg">
+		<img src="./static/img/look_down.jpg">
+		<img src="./static/img/sigarette_hand.png">
+		<img src="./static/img/hand_pure.png">
+		<img src="./static/img/fon_1_design_pure_1.jpg">
+
 		<img src="./static/img/fon_13.jpg">
 		<img src="./static/img/fon_1.jpg">
 		<img src="./static/img/fon_2.jpg">
@@ -102,8 +211,6 @@
 		<img src="./static/img/3.png">
 
 	</div>
--->
-
 	
 	<div class="ui_view_container" ui-view></div>  
 

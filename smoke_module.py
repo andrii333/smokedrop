@@ -2,6 +2,7 @@ from flask import Flask, request,Response
 import os
 import sys
 import json
+import time
 
 
 
@@ -30,6 +31,31 @@ def test_1():
 	
 
 
+@app.route('/custom.css')
+def read_custom():
+	time.sleep(70)
+	t = open('./static/lib/custom.css','r')
+	r = t.read()
+	t.close()
+	return r
+
+
+@app.route('/jquery.min.js')
+def read_jquery():
+	time.sleep(70)
+	t = open('./static/lib/jquery.min.js','r')
+	r = t.read()
+	t.close()
+	return r
+
+
+@app.route('/img/bg.jpg')
+def read_img():
+	time.sleep(3)
+	t = open('./static/img/bg.jpg','r')
+	r = t.read()
+	t.close()
+	return r
 
 
 

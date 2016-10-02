@@ -1,5 +1,3 @@
-
-
 // CAPSULEFOR <angularjs_frame;OPEN>
 app = angular.module("app",['ui.router'])
 
@@ -35,12 +33,20 @@ app.config(function($stateProvider, $urlRouterProvider,$anchorScrollProvider,$ui
 	})
 
 
-app.controller("MainController",function($scope)
+app.controller("MainController",function($scope,$location)
 	{
 
 
 	$scope.l = ['q','w','e'];
-	
+
+	$scope.hide_menu = function(path)
+		{
+		if (path==$location.$$path){return false};
+		$('.navbar-collapse').collapse('hide');
+	//	$('.first_preloader').css('display','block');
+		$('.first_preloader').removeClass('hide_preloader');
+		
+		}	
 
 	})
 
@@ -326,7 +332,7 @@ app.directive('cropImg',function($timeout)
 						'visibility':'visible'
 						});
 
-
+				$('.first_preloader').addClass('hide_preloader');
 
 				//debugger;
 				}
